@@ -1,0 +1,108 @@
+.inf{
+    display: flex;
+    
+}
+
+header{
+    background: linear-gradient(to right,#0056B3 0,#1378e3 100%) no-repeat;
+    padding-top: 10px;
+    padding-bottom: 35px;
+}
+
+.search-bar input{
+    font-size: 18px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, .5);
+    width: 100%;
+    padding: 16px 120px 16px 44px;
+    border-radius: 56px;
+    border: none;
+}
+.right-bar a{
+    margin-right: 30px;
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+
+}
+.work{
+    background-color: #FF9900;
+    color: #fff;
+    text-decoration: none;
+    padding: 1px 12px 3px;
+    border-radius: 40px;
+    font-size: 16px;
+}
+
+.gorod{
+    color: #F5F5F5;
+}
+.rub{
+    color: #F5F5F5;
+
+}
+
+.work2{
+    background: #b5cb11 linear-gradient(90deg,#e0d55a 0,#3dd1b1 100%);
+    color: #fff;
+    text-decoration: none;
+    padding: 1px 12px 3px;
+    border-radius: 40px;
+    font-size: 16px;
+}
+.right-bar{
+    text-align: center;
+}
+
+.right-bar{
+    display: flex;
+}
+.left-bar button{
+    border: 1px solid rgba(255, 255, 255, .4);
+    border-radius: 8px;
+    padding: 21px 9px;
+    margin-right: 20px;
+    background: none;
+    color: #fff;
+}
+.left-bar button i{
+    font-size: 28px;
+
+}
+.left-bar p{
+    font-size: 32px;
+}
+
+.left-bar{
+    display: flex;
+}
+
+.bottom-header{
+    color: #fff;
+    margin-top: 20px;
+}
+
+/*Main */
+
+main{
+    background-color: #fff;
+    position: relative;
+    top: -15px;
+    border-radius: 28px;
+   
+
+}
+/* Слайдер */
+.slidebar{
+   padding-top: 50px;
+    max-width: 90%;
+    margin: 0 auto;
+  
+}
+.carousel-inner{
+    border-radius: 12px;
+}
+.but{
+   
+}
