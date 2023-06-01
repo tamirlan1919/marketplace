@@ -59,12 +59,11 @@ header{
     display: flex;
 }
 .left-bar button{
-    border: 1px solid rgba(255, 255, 255, .4);
     border-radius: 8px;
     padding: 21px 9px;
     margin-right: 20px;
     background: none;
-    color: #fff;
+   
 }
 .left-bar button i{
     font-size: 28px;
@@ -105,4 +104,87 @@ main{
 }
 .but{
    
+}
+
+.category{
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 22px;
+    color: #242424;
+    display: block;
+    position: relative;
+    padding: 3px 5px 3px 44px;
+    border-radius: 8px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+.cat{
+    display: block;
+}
+
+.cat li{
+    border-radius: 18px;
+}
+
+.cat li{
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+.cat li:hover{
+    transition: all .2s;
+    background-color: #1378e3;
+    text-decoration: underline;
+}
+
+.btn-close{
+    opacity: 1;
+}
+
+
+
+.close{
+    display: block;
+}
+
+
+.pod{
+    
+   
+
+}
+.pod a{
+    font-size: 16px;
+    line-height: 22px;
+    color: black;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+    border-color: initial;
+    transition: color .3s ease 0s;
+    display: block;
+}
+
+
+.name:hover > .list-pod{
+    display: block;
+}
+
+.name:focus >.list-pod{
+    display: block;
+}
+
+.list-pod{
+    display: none;
+    color: #242424;
+    position: absolute;
+    background-color: #fff;
+    min-width: 300px;
+    height: 100vh;
+    top: 0;
+    left: 350px;
+}
+
+.list-pod-two{
+    display: none;
 }

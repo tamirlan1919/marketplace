@@ -18,8 +18,20 @@ class UserProfile(models.Model):
     notification_settings = models.BooleanField('Уведомления',default=True)
 
 class Category(models.Model):
-    name = models.CharField('Категория',max_length=50)
-    products = models.ManyToManyField('Product', related_name='categories')
+    name = models.CharField('Категория',max_length=100)
+    podname = models.CharField('Подкатегория',max_length=100,null=True)
+    podname_name = models.CharField('последний каталог',max_length=100,blank=True,null=True)
+
+
+class Categoryy(models.Model):
+    name = models.CharField('Категория', max_length=100)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children')
+
+
+    def __str__(self) -> str:
+        return f'{self.name} {self.podname}'
+    
+
 
 class Attribute(models.Model):
     name = models.CharField('Атрибут (Размер/Цвет/Материал)',max_length=100)
@@ -40,7 +52,10 @@ class Product(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     attributes = models.ManyToManyField('Attribute', through='ProductAttribute')
     is_on_sale = models.BooleanField(default=False)
-    images = MultiSelectField('Изображения', choices=[('image1', 'Image 1'), ('image2', 'Image 2'), ('image3', 'Image 3')], max_choices=3, blank=True)
+    images = models.ManyToManyField('ProductImage', blank=True)
+
+class ProductImage(models.Model):
+    image = models.ImageField('Изображение', upload_to='product/pictures/')
 
 
 

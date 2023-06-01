@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='main' )
+    path('', views.index, name='main' ),
+path('products/<int:cat_id>/', views.products_by_category_view, name='products_by_category')
 ]
 
 if settings.DEBUG:
