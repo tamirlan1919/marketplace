@@ -46,27 +46,22 @@
                             <div class="offcanvas-body">
                               <div>
                                 <ul class="cat">
-                                    {% for category in top_categories %}
+                                    {% for category in cat %}
                                         <li class="name">
                                             <a href="" class="category">{{ category.name }}</a>
                                             <ul class="list-pod">
-                                                {% for subcategory in category.children.all %}
-                                                    <li class="pod">
-                                                        <a href="">{{ subcategory.name }}</a>
-                                                        <ul class="list-pod-two">
-                                                            {% for last_category in subcategory.children.all %}
-                                                                <li class="pod-two">
-                                                                    <a href="">{{ last_category.name }}</a>
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </li>
+                                                {% for sub in pod %}
+                                                {% if  sub.name == category.name %}
+                                                        <li class="pod">
+                                                            <a href="">{{ sub.podname }}</a>
+                                                               
+                                                        </li>
+                                                {% endif %}
                                                 {% endfor %}
                                             </ul>
                                         </li>
                                     {% endfor %}
                                 </ul>
-                                
                                 
                               </div>
                             </div>

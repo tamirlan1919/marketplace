@@ -22,6 +22,8 @@ class Category(models.Model):
     podname = models.CharField('Подкатегория',max_length=100,null=True)
     podname_name = models.CharField('последний каталог',max_length=100,blank=True,null=True)
 
+    def __str__(self) -> str:
+        return f'{self.name} {self.podname}'
 
 class Categoryy(models.Model):
     name = models.CharField('Категория', max_length=100)
