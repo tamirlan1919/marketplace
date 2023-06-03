@@ -19,6 +19,7 @@ class Category(models.Model):
     name = models.CharField('Категория',max_length=100)
     podname = models.CharField('Подкатегория',max_length=100,null=True)
     podname_name = models.CharField('последний каталог',max_length=100,blank=True,null=True)
+    img = models.ImageField(upload_to='priview',null=True)
 
     def __str__(self) -> str:
         return f'{self.name} {self.podname}'
@@ -53,6 +54,9 @@ class Product(models.Model):
     attributes = models.ManyToManyField('Attribute', through='ProductAttribute')
     is_on_sale = models.BooleanField(default=False)
     images = models.ManyToManyField('ProductImage', blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.name} {self.brand} {self.price} '
 
 class ProductImage(models.Model):
     image = models.ImageField('Изображение', upload_to='product/pictures/')

@@ -8,8 +8,9 @@ def index(request):
     pod = Category.objects.values('name','podname').distinct()
     data = Category.objects.values('name').distinct()
     data_id = Category.objects.values('id','name',).distinct()
+    tovars = Product.objects.all()
     print(data)
-    return render(request, 'index.html',{'cat':data,'pod': pod,'subb':sub})
+    return render(request, 'index.html',{'cat':data,'pod': pod,'subb':sub,'tovars':tovars})
 
 
 

@@ -134,10 +134,24 @@
         </main>
 
         <div id="app">
-            
+            <div class="container">
+                <div class="row">
+                    {% for item in tovars %}
+                        <div class="col">
+                            <div class="img"><img src="{{item.picture.url}}" alt=""></div>
+                            <p class="price">{{item.price}}&#8381</p>
+                            <p class="brand">{{item.brand}} <span>/</span> <span>{{item.name}}</span> </p>
+                            <button>В коризну</button>
+                        </div>
+                   
+                    {% endfor %}
+                </div>
+            </div>
+          
         </div>
+
         <div class="do-foot"></div>
-        <footer></footer>
+
 
 
       
