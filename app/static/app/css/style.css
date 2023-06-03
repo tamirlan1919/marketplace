@@ -12,7 +12,7 @@ header{
 .search-bar input{
     font-size: 18px;
     line-height: 24px;
-    color: rgba(255, 255, 255, .5);
+    color: rgba(210, 206, 206, 0.832);
     width: 100%;
     padding: 16px 120px 16px 44px;
     border-radius: 56px;
@@ -95,7 +95,7 @@ main{
 /* Слайдер */
 .slidebar{
    padding-top: 50px;
-    max-width: 90%;
+    width: 100%;
     margin: 0 auto;
   
 }
@@ -204,3 +204,47 @@ header  input{
     -webkit-appearance: none;
     appearance: none;
   }
+
+
+
+  footer{
+    background: linear-gradient(to right,#0056B3 0,#1378e3 100%) no-repeat;
+    padding-top: 10px;
+    padding-bottom: 35px;
+    
+}
+.do-foot{
+    background-color: #fff;
+    width: 110vw;
+    height: 50px;
+    position: relative;
+    bottom: -5px;
+    border-radius: 28px;
+}
+
+footer ul li a{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    font-size: 16px;
+    line-height: 22px;
+    color: rgba(255,255,255,.7);
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 8px 0;
+}
+
+footer ul li{
+    overflow-wrap: break-word;
+    word-break: break-word;
+    font-size: 18px;
+    line-height: 24px;
+    color: #fff;
+    font-weight: 600;
+    list-style-type: none;
+}
+
+html,body{
+    overflow-x: hidden;
+}

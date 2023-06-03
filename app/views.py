@@ -5,7 +5,7 @@ from app.models import Category,Product
 
 def index(request):
     sub = Category.objects.values('podname').distinct()
-    pod = Category.objects.values('name','podname','podname_name').distinct()
+    pod = Category.objects.values('name','podname').distinct()
     data = Category.objects.values('name').distinct()
     data_id = Category.objects.values('id','name',).distinct()
     print(data)
