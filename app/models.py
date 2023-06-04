@@ -51,11 +51,13 @@ class Product(models.Model):
     picture = models.ImageField('Изображение',upload_to='product/pictures/')
     quantity = models.PositiveIntegerField('Количество')
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
-    attributes = models.ManyToManyField('Attribute', through='ProductAttribute')
     is_on_sale = models.BooleanField(default=False)
     images = models.ManyToManyField('ProductImage', blank=True)
     sale = models.DecimalField('Процент скидки', max_digits=5 ,decimal_places=1,null=True,blank=True)
     image_sale = models.ImageField('Превью акций',upload_to='sales',null=True,blank=True)
+    attribute = models.ForeignKey('Attribute', on_delete=models.CASCADE,null=True)
+
+
 
     def __str__(self) -> str:
         return f'{self.name} {self.brand} {self.price} '
@@ -65,9 +67,9 @@ class ProductImage(models.Model):
 
 
 
-class ProductAttribute(models.Model):
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    attribute = models.ForeignKey('Attribute', on_delete=models.CASCADE)
+# class ProductAttribute(models.Model):
+#     product = models.ForeignKey('Product', on_delete=models.CASCADE)
+#     attribute = models.ForeignKey('Attribute', on_delete=models.CASCADE)
 
 
 class Order(models.Model):
