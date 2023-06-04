@@ -59,7 +59,16 @@
                                                 {% endif %}
                                                 {% endfor %}
                                             </ul>
+                                            <div  class="cat-img">
+                                                {% for item in categ %}
+                                                {% if item.img and item.name == category.name  %}
+                                                <img src="{{item.img.url}}" alt="">
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                       
                                         </li>
+                                        
                                     {% endfor %}
                                 </ul>
                                 
@@ -90,7 +99,7 @@
         </header>
         <main>
 
-
+{% block content %}
 
             <div class="container">
                 <div class="row">
@@ -133,23 +142,49 @@
             
         </main>
 
-        <div id="app">
+        <div id="sales">
+            <h1>Акции</h1>
             <div class="container">
                 <div class="row">
                     {% for item in tovars %}
-                        <div class="col">
+                    <div class="col">
+                        {% if item.image_sale %}
+                        <a href="">
+                         <img src="{{item.image_sale.url}}" alt="">
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div id="app">
+            <h1>Все товары</h1>
+            <div class="container">
+                <div class="row">
+                    {% for item in tovars %}
+                    
+                    <a href="{% url 'show_tovar' item.id %}">
+                        <div class="col-3 tov">
                             <div class="img"><img src="{{item.picture.url}}" alt=""></div>
+                            {% if item.is_on_sale %}
+                            <p class="price">{{item.price}}&#8381</p><span class="del"></span>
+                            {% else %}
                             <p class="price">{{item.price}}&#8381</p>
+                            {% endif %}
                             <p class="brand">{{item.brand}} <span>/</span> <span>{{item.name}}</span> </p>
                             <button>В коризну</button>
                         </div>
-                   
+                    </a>
+                        
+                    
                     {% endfor %}
                 </div>
             </div>
           
         </div>
-
+{% endblock %}
         <div class="do-foot"></div>
 
 

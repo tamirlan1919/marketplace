@@ -54,6 +54,8 @@ class Product(models.Model):
     attributes = models.ManyToManyField('Attribute', through='ProductAttribute')
     is_on_sale = models.BooleanField(default=False)
     images = models.ManyToManyField('ProductImage', blank=True)
+    sale = models.DecimalField('Процент скидки', max_digits=5 ,decimal_places=1,null=True,blank=True)
+    image_sale = models.ImageField('Превью акций',upload_to='sales',null=True,blank=True)
 
     def __str__(self) -> str:
         return f'{self.name} {self.brand} {self.price} '
