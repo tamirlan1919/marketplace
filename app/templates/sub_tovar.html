@@ -7,8 +7,7 @@
         <div class="col-12">
             
             <ul>
-                <li><a href=""><i class="bi bi-arrow-left"></i></a></li>
-                <li>></li>
+                <li><a href=""><button><i class="fa-solid fa-arrow-left"></i></button></a></li>
                 <li>Главная</li>
                 <li>></li>
                 <li><a href="">{{tovar.category.name}}</a></li>
@@ -26,50 +25,97 @@
              
             </ul>
         </div>
- 
-      <div class="col-6">
-        <div class="main-show owl-carousel owl-theme">
-          {% for item in tovar.images.all %}
-          
+        <div class="col-6">
+          <div class="main-show owl-carousel owl-theme">
             <div class="item">
-              <img src="{{ item.image.url }}" alt="">
+              <img id="picture" src="{{ tovar.picture.url }}" alt="">
             </div>
-          {% endfor %}
+          </div>
+          <div class="main-show2">
+            <div class="scroll-container" id="scroll-container">
+              {% for item in tovar.images.all %}
+              <div class="another-img">
+                <img id="img" src="{{item.image.url}}" onclick="showImage(this)" onmouseover="showImage(this)" alt="">
+              </div>
+              {% endfor %}
+            </div>
+          </div>
         </div>
-      </div>
+        
       <div class="col-6">
         <h1>{{tovar.brand}}</h1>
         <h2>{{tovar.name}}</h2>
-        <p class="show_tovar_price">{{tovar.price}}</p>
+        <div class="price-div">
+          <p class="show_tovar_price">{{tovar.sale_price}} &#x20bd</p>
+        <s>  <p class="new_price">{{tovar.price}} &#x20bd</p></s>
+        </div>
+        
         <div class="lst-button">
-            <button class="add-cart"><i class="bi bi-cart"></i>В коризну</button>
-            <button class="add-heart"><i class="bi bi-suit-heart"></i>В избранное</button>
+            <button class="add-cart"><i class="fa-sharp fa-solid fa-cart-shopping"></i>В коризну</button>
+            <button class="add-heart"><i class="fa-regular fa-heart"></i>В избранное</button>
+            <button class="add-heart"><i class="fa-solid fa-share-nodes"></i></button>
+
         </div>
       </div>
-      <div class="col off">
-        <p>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Описание</a>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Характеристика</button>
-          </p>
-          <div class="row">
-            <div class="col">
-              <div class="collapse multi-collapse" id="multiCollapseExample1">
-                <div class="card card-body">
-                    {{tovar.description}}
-                </div>
-              </div>
+      <div class="col-6 off">
+            <div class="off-text">
+              <button class="active-btn" id="about">Описание</button>
+              <button class="deactive" id="descp">Характеристика</button>
             </div>
-            <div class="col">
-              <div class="collapse multi-collapse" id="multiCollapseExample2">
-                <div class="card card-body">
-                    <pre>{{tovar.about_tovar}}</pre>
-                </div>
-              </div>
+            <div class="about active-text" id="text1">
+             
+              {{tovar.description}}
             </div>
-          </div>
+            <div class="description deactive-text" id="text2">
+              <pre>{{tovar.about_tovar}}</pre>
+              
+              
+            </div>
       </div>
     </div>
   </div>
   
+
+  <div class="container" id="app">
+    <h1>Похожие товары</h1>
+    <div class="row">
+      {% for item in tovars %}
+      {% if item.category.name == tovar.category.name and item.category.podname == tovar.category.podname %}
+      <div class="col">
+        <a href="{% url 'show_tovar' item.id %}">
+          <div class="col-3 tov">
+              <div class="img"><img src="{{item.picture.url}}" alt=""></div>
+              {% if item.is_on_sale %}
+              <p class="price">{{item.price}}&#8381</p><span class="del"></span>
+              {% else %}
+              <p class="price">{{item.price}}&#8381</p>
+              {% endif %}
+              <p class="brand">{{item.brand}} <span>/</span> <span>{{item.name}}</span> </p>
+              <button>В коризну</button>
+          </div>
+      </a>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <div class="container review">
+    <div class="row">
+      <div class="info">
+        <button>Отзывы</button>
+        <button>Вопросы</button>
+      </div>
+     
+      {% for item in reviews %}
+      <div class="col">
+        
+      </div>
+      {% empty %}
+      <p>Пока отзывов нет<i class="fa-solid fa-ghost"></i></p>
+      {% endfor %}
+    </div>
+  </div>
 
 {% endblock %}

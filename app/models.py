@@ -48,6 +48,7 @@ class Product(models.Model):
     description = models.TextField('Описание')
     about_tovar = models.TextField('О товаре')
     price = models.DecimalField('Цена',max_digits=10, decimal_places=2)
+    sale_price = models.DecimalField('Цена со скидкой',max_digits=10,decimal_places=2,null=True,blank=True)
     picture = models.ImageField('Изображение',upload_to='product/pictures/')
     quantity = models.PositiveIntegerField('Количество')
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
@@ -56,7 +57,7 @@ class Product(models.Model):
     sale = models.DecimalField('Процент скидки', max_digits=5 ,decimal_places=1,null=True,blank=True)
     image_sale = models.ImageField('Превью акций',upload_to='sales',null=True,blank=True)
     attribute = models.ForeignKey('Attribute', on_delete=models.CASCADE,null=True)
-
+    reviews = models.ManyToManyField('Review', related_name='products', blank=True)
 
 
     def __str__(self) -> str:
@@ -85,12 +86,18 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField()
 
 
+class ReviewImage(models.Model):
+    image = models.ImageField('Изображение', upload_to='review/pictures/')
+
+
 class Review(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     text = models.TextField('Отзыв')
     rating = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    images = models.ManyToManyField('ReviewImage', blank=True)
+
 
 
 

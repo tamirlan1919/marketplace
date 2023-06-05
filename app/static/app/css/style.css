@@ -229,6 +229,31 @@ header  input{
     bottom: -5px;
     border-radius: 28px;
 }
+.list-pod{
+    
+}
+.one_tovar ul li a button{
+    vertical-align: middle;
+    border: none;
+    background-color: #fff;
+    width: 28px;
+    min-height: 29px;
+    display: flex;
+
+}
+.cat-img{
+    position: relative;
+    left: 268px;
+    top: 0px;
+    background-color: #fff;
+    width: 200px;
+    padding: 0px 10px;
+    height: 100vh;
+    position: relative;
+}
+.cat-img{
+    object-fit: contain;
+}
 
 footer ul li a{
     word-wrap: break-word;
@@ -344,21 +369,53 @@ html,body{
 }
 
 .main-show .item img{
-    width: 100%;
+
     height: 100%;
     object-fit: contain;
+}
+
+.main-show2{
+    margin-top: 20px;
+    width: 100%;
+    max-height: 100px;
+    display: flex;
+}
+
+.main-show2 .another-img{
+    max-width: 100px;
+    max-height: 100px;
+    justify-content: center;
+
+}
+
+.main-show2 .another-img img{
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 .add-cart{
     background: #0056B3;
     border: none;
     color: #fff;
-    padding: 7px 20px;
-    font-size: 14px;
+    
+    font-size: 16px;
     line-height: 20px;
-    margin-right: 20px;
+
     border-radius: 7px;
 }
+
+.lst-button button{
+    padding: 7px 20px;
+    margin-right: 20px;
+  
+    font-size: 16px;
+    line-height: 20px;
+
+    border-radius: 7px;
+}
+
 
 .add-heart{
     background: #F3F3F3;
@@ -373,7 +430,6 @@ html,body{
 .show_tovar_price{
     font-size: 36px;
     line-height: 44px;
-    margin-top: 50px;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -413,4 +469,113 @@ html,body{
     line-height: 1.5;
     margin: 0;
     text-align: left;
+}
+
+.one_tovar .off-text:first-child{
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: #000;
+    column-gap: 12px;
+    display: inline-flex;
+    height: 44px;
+    justify-content: center;
+    padding-left: 24px;
+    padding-right: 24px;
+    
+}
+.off-text button{
+    padding: 5px 50px;
+    border-radius: 6px;
+    margin-top: 20px;
+    border: none;
+    padding-bottom: 5px;
+}
+
+.active-btn{
+    background: #fff;
+}
+
+.off-text .deactive{
+    background-color: #F9F8FB;
+
+}
+
+.one_tovar .off-text{
+    padding-bottom: 25px;
+    
+    background-color: #F9F8FB;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.main-show2 {
+    overflow-x: auto;
+  }
+  
+  .scroll-container {
+    justify-content: center;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 10px; /* Дополнительное пространство для изображений */
+  }
+  
+  .another-img {
+    flex: 0 0 auto;
+    margin-right: 20px; /* Дополнительное пространство между изображениями */
+  }
+  
+  .about{
+    background-color: #fff;
+    color: #212529;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,Liberation Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+    text-align: left;
+  }
+
+  .deactive-text{
+    display: none;
+  }
+  #img:hover{
+    border: 3px solid #0056B3;
+  }
+
+  .price-div{
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 48px;
+  }
+
+  .price-div .new_price{
+    margin-left: 15px;
+    font-size: 28px;
+    line-height: 36px;
+    font-family: 'Roboto', sans-serif;
+    color: rgba(16,10,28,.3);
+    text-decoration: line-through;
+  }
+  .price-div s{
+    color: red;
+  }
+
+  .review{
+    margin-top: 50px;
+  }
+
+.review button{
+    font-size: 16px;
+    line-height: 22px;
+    color: #242424;
+    border-color: initial;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #868695;
+    border-color: transparent;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
 }
