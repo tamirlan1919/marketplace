@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from app.models import Category,Product,Review
+from app.models import Category,Product,Review,Question
 # Create your views here.
 
 
@@ -27,4 +27,7 @@ def show_sub_tovar(request,id_clothes:int):
     tovar = get_object_or_404(Product,id = id_clothes)
     tovars = Product.objects.all()
     reviews = Review.objects.all()
-    return render(request,'sub_tovar.html',{'tovar':tovar,'tovars':tovars,'reviews':reviews})
+    questions = Question.objects.all()
+    return render(request,'sub_tovar.html',{'tovar':tovar,'tovars':tovars,'reviews':reviews,
+                                            'len':len(reviews), 'quest':questions,
+                                            'len_quest':len(questions)})

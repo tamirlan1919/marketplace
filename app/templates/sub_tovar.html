@@ -104,17 +104,65 @@
   <div class="container review">
     <div class="row">
       <div class="info">
-        <button>Отзывы</button>
-        <button>Вопросы</button>
+        <button id="rev">Отзывы <sup>{{len}}</sup></button>
+        <button id="quest">Вопросы <sup>{{len_quest}}</sup></button>
       </div>
-     
-      {% for item in reviews %}
-      <div class="col">
-        
+     <div class="reviewss" id="block_rev">
+      {% for item in tovar.reviews.all %}
+
+      <div class="col-4">
+          <div class="wrap">
+            <div class="top">
+              <div class="img">
+                <img src="{{item.user.user_picture.url}}" alt="">
+              </div>
+              <div class="con-info">
+                <span class="user_name">{{item.user.user}}</span>
+                <span class="user_review">{{item.created_at}}</span>
+                <p>Рейтинг {{item.rating}}</p>
+              </div>
+            </div>
+            <div class="wrap-body">
+              <p>{{item.text}}</p>
+            </div>
+          </div>
       </div>
-      {% empty %}
-      <p>Пока отзывов нет<i class="fa-solid fa-ghost"></i></p>
+ 
       {% endfor %}
+     </div>
+     
+     <div class="questions" id="block_quest">
+      {% for item in tovar.question.all %}
+    
+          <div class="another-img">
+            <img id="img" src="{{item.images.url}}"  alt="">
+          </div>
+          
+     
+      <div class="col-4">
+        <div class="wrap">
+          <div class="top">
+            <div class="img">
+              <img src="{{item.user.user_picture.url}}" alt="">
+            </div>
+            <div class="con-info">
+              <span class="user_name">{{item.user.user}}</span>
+              <span class="user_review">{{item.created_at}}</span>
+            </div>
+          </div>
+          <div class="wrap-body">
+            <p>{{item.quest_user}}</p>
+            
+          </div>
+          <div class="wrap_answer">
+            <p class="seller"><i class="fa-solid fa-check"></i>Торговый представитель</p>
+            <p>{{item.answer}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+     </div>
+
     </div>
   </div>
 

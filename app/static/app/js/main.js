@@ -5,6 +5,27 @@ let img = document.getElementById('img')
 let picture = document.getElementById('picture')
 let elements = document.querySelectorAll("#img")
 
+let rev = document.getElementById('rev')
+let quest = document.getElementById('quest')
+let block_rev = document.getElementById('block_rev')
+let block_quest = document.getElementById('block_quest')
+
+
+quest.onclick = function(){
+    rev.style.color = '#9d9da5;'
+    quest.style.color = '#000;'
+    block_rev.style.display = 'none'
+    block_quest.style.display = 'block'
+}
+
+rev.onclick = function(){
+    quest.style.color = '#9d9da5;'
+    rev.style.color = '#000;'
+    block_quest.style.display = 'none'
+    block_rev.style.display = 'block'
+}
+
+
 function showImage(element) {
     var imageSrc = element.getAttribute("src");
     var pictureImg = document.getElementById("picture");

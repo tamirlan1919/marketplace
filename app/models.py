@@ -57,8 +57,8 @@ class Product(models.Model):
     sale = models.DecimalField('Процент скидки', max_digits=5 ,decimal_places=1,null=True,blank=True)
     image_sale = models.ImageField('Превью акций',upload_to='sales',null=True,blank=True)
     attribute = models.ForeignKey('Attribute', on_delete=models.CASCADE,null=True)
-    reviews = models.ManyToManyField('Review', related_name='products', blank=True)
-
+    reviews = models.ManyToManyField('Review', related_name='products', blank=True,null=True)
+    question = models.ManyToManyField('Question',blank=True,related_name='products',null=True)
 
     def __str__(self) -> str:
         return f'{self.name} {self.brand} {self.price} '
@@ -91,13 +91,27 @@ class ReviewImage(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     text = models.TextField('Отзыв')
     rating = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     images = models.ManyToManyField('ReviewImage', blank=True)
 
+
+class SellerProfile(models.Model):
+    user = models.OneToOneField('User',on_delete=models.CASCADE,null=True)
+    user_picture = models.ImageField('Изображения продавца',upload_to='profile_pictures/',null=True)
+    contact_info = models.CharField('Контактная информация',max_length=100,null=True)
+    notification_settings = models.BooleanField('Уведомления',default=True,null=True)
+
+class Question(models.Model):
+    user = models.ForeignKey('UserProfile', on_delete=models.CASCADE,null=True)
+    seller = models.ForeignKey('SellerProfile',on_delete=models.CASCADE,null=True)
+    quest_user = models.TextField('Вопрос',null=True)
+    answer = models.TextField('Ответ',null=True)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE,related_name='products',null=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
 
 
