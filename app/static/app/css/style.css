@@ -640,3 +640,197 @@ html,body{
 .questions{
     display: none;
 }
+
+.wrap-login{
+
+ 
+    height: 100%;
+
+}
+.wrap-login .log{
+    text-align: center;
+    max-width: 360px;
+    max-height: 328px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,.1);
+    margin: auto auto;
+}
+.wrap-login label{
+    font-size: 14px;
+    line-height: 20px;
+    color: #868695;
+    position: relative;
+    padding-left: 22px;
+    margin-top: 24px;
+}
+.wrap-login h2{
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 24px;
+}
+.login .wr{
+    height: 70vh;
+}
+
+.sec-reg .reg  {
+    z-index: 2222;
+}
+
+.sec-login .log{
+    z-index: 2222;
+
+}
+
+.sec-reg .pt{
+
+    position: absolute;
+    left: 0;
+}
+
+.sec-login .pt{
+     position: absolute;
+    left: 0;
+}
+
+.sec-reg-wrapper{
+    z-index: 2222;
+    min-height: 95vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sec-log-wrapper{
+        z-index: 2222;
+    min-height: 95vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.sec-login .footer{
+    background-color: white;
+
+    margin: 0 auto;
+    margin-top: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+    border-radius: 4px;
+
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sec-reg .footer{
+        background-color: white;
+
+    margin: 0 auto;
+    margin-top: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+    border-radius: 4px;
+
+    padding: 20px;
+    box-sizing: border-box;
+}
+.sec-login{
+    margin-top: 50px;
+}
+
+.sec-login form{
+    margin-top: 50px;
+
+    margin: 0 auto;
+}
+
+.sec-login button{
+    margin-right: 5px;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 2px;
+    width: 100%;
+    min-height: 60px;
+    font-size: 16px;
+    line-height: 1.3125;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #0056B3;
+    transition: .3s;
+    cursor: pointer;
+    border: none;
+}
+
+.sec-reg , .sec-login{
+    height: 100vh;
+    background-color: #F4F4F4;
+}
+
+.sec-reg-wrapper , .sec-log-wrapper {
+
+    vertical-align: center;
+}
+
+.sec-reg .reg-info , .sec-login .log-info{
+
+    max-width: 460px;
+
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+    border-radius: 4px;
+    margin: 0 auto;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+
+.sec-reg form{
+        margin-top: 50px;
+
+    margin: 0 auto;
+}
+
+.sec-reg button{
+        margin-right: 5px;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 2px;
+    width: 100%;
+    min-height: 60px;
+    font-size: 16px;
+    line-height: 1.3125;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #0056B3;
+    transition: .3s;
+    cursor: pointer;
+    border: none;
+}
+
+.top input{
+    cursor: pointer;
+    font-weight: 300;
+    color: #868686;
+
+    padding-left: 3.3333333333rem;
+    padding-right: 3.3333333333rem;
+    height: 3.3333333333rem;
+    border: 0.1333333333rem solid #f1f1f1;
+    border-radius: 0;
+    width: 100%;
+    transition: border-color .1s,box-shadow .1s;
+    font-size: 1.1333333333rem;
+    line-height: 1.6rem;
+    background-color: #fff;
+}
+
+.top .search{
+    display: flex;
+}

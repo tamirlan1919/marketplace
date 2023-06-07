@@ -1,5 +1,9 @@
 from django.shortcuts import render,get_object_or_404
 from app.models import Category,Product,Review,Question
+from .forms import UserRegisterForm,UserLoginForm
+from django.contrib.auth import login,logout,authenticate
+from django.shortcuts import redirect
+from django.contrib import messages
 # Create your views here.
 
 
@@ -31,3 +35,34 @@ def show_sub_tovar(request,id_clothes:int):
     return render(request,'sub_tovar.html',{'tovar':tovar,'tovars':tovars,'reviews':reviews,
                                             'len':len(reviews), 'quest':questions,
                                             'len_quest':len(questions)})
+
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Вы успешно зарегистрировались')
+            return redirect('home')
+        else:
+            messages.error(request, 'Ошибка регистрации')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'register.html', {'form':form})
+
+def user_logout(request):
+    logout(request)
+    return redirect('home')
+
+def user_login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserLoginForm()
+    return render(request, 'login.html', {'form':form})
