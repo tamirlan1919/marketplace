@@ -12,6 +12,9 @@
         <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     </head>
     <body>
@@ -27,10 +30,10 @@
                             <p class="gorod">Ростов-на-Дону</p>
                         </div>
                         <div class="col">
-                            <a href="#" class="work">Продавайте на ДЕЙШОП</a>
+                            <a href="#" class="work">Продавайте на LARAM</a>
                         </div>
                         <div class="col">
-                            <a href="#" class="work2">Работа в ДЕЙШОП</a>
+                            <a href="#" class="work2">Работа в LARAM</a>
                         </div>
                         
                         
@@ -83,20 +86,23 @@
 
  
 
-                        <p><a href="{% url 'main' %}">ДЕЙШОП</a></p>
+                        <p><a href="{% url 'main' %}">laram</a></p>
                     </div>
                     <div class="col-7 search-bar">
                         <input type="search" placeholder="Я ищу....">
                     </div>
                     <div class="col-3 right-bar">
                         <div>
-                            <a href=""><i class="fa-solid fa-location-dot"></i><br>Адреса</a>
+                            <a href=""><i class="fa-solid fa-location-dot"></i></a>
+                            <p>Адреса</p>
                         </div>
                         <div>
-                            <a href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i><br>Войти</a>
+                            <a href="{% url 'login' %}"><i class="fa-solid fa-user"></i></a>
+                            <p>Войти</p>
                         </div>
                         <div>
-                            <a href=""><i class="fa-solid fa-cart-shopping"></i><br>Корзина</a>
+                            <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                            <p>Коризина</p>
                         </div>
                     </div>
                 </div>
@@ -143,54 +149,55 @@
                 </div>
             </div>
 
-
+            <div id="sales">
+                <h1>Акции</h1>
+                <div class="container">
+                    <div class="row">
+                        {% for item in tovars %}
+                        <div class="col">
+                            {% if item.image_sale %}
+                            <a href="">
+                             <img src="{{item.image_sale.url}}" alt="">
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    
+            <div id="app">
+                <h1>Все товары</h1>
+                <div class="container">
+                    <div class="row">
+                        {% for item in tovars %}
+                        
+                        <a href="{% url 'show_tovar' item.id %}">
+                            <div class="col-3 tov">
+                                <div class="img"><img src="{{item.picture.url}}" alt=""></div>
+                                {% if item.is_on_sale %}
+                                <p class="price">{{item.price}}&#8381</p><span class="del"></span>
+                                {% else %}
+                                <p class="price">{{item.price}}&#8381</p>
+                                {% endif %}
+                                <p class="brand">{{item.brand}} <span>/</span> <span>{{item.name}}</span> </p>
+                                <button>В коризну</button>
+                            </div>
+                        </a>
+                            
+                        
+                        {% endfor %}
+                    </div>
+                </div>
+              
+            </div>
             
         </main>
 
-        <div id="sales">
-            <h1>Акции</h1>
-            <div class="container">
-                <div class="row">
-                    {% for item in tovars %}
-                    <div class="col">
-                        {% if item.image_sale %}
-                        <a href="">
-                         <img src="{{item.image_sale.url}}" alt="">
-                        </a>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
 
-        <div id="app">
-            <h1>Все товары</h1>
-            <div class="container">
-                <div class="row">
-                    {% for item in tovars %}
-                    
-                    <a href="{% url 'show_tovar' item.id %}">
-                        <div class="col-3 tov">
-                            <div class="img"><img src="{{item.picture.url}}" alt=""></div>
-                            {% if item.is_on_sale %}
-                            <p class="price">{{item.price}}&#8381</p><span class="del"></span>
-                            {% else %}
-                            <p class="price">{{item.price}}&#8381</p>
-                            {% endif %}
-                            <p class="brand">{{item.brand}} <span>/</span> <span>{{item.name}}</span> </p>
-                            <button>В коризну</button>
-                        </div>
-                    </a>
-                        
-                    
-                    {% endfor %}
-                </div>
-            </div>
-          
-        </div>
 {% endblock %}
-        <div class="do-foot"></div>
+
+       
 
 
 

@@ -12,7 +12,13 @@ header{
     padding-top: 10px;
     padding-bottom: 35px;
 }
+body{
+    background: linear-gradient(to right,#0056B3 0,#1378e3 100%) no-repeat;
 
+}
+main{
+    background-color: #fff;
+}
 .search-bar input{
     font-size: 18px;
     line-height: 24px;
@@ -23,12 +29,14 @@ header{
     border: none;
 }
 .right-bar a{
-    margin-right: 30px;
     font-size: 20px;
     text-align: center;
     color: #fff;
     text-decoration: none;
 
+}
+.right-bar div{
+    margin-right: 15px;
 }
 .work{
     background-color: #FF9900;
@@ -67,14 +75,28 @@ header{
     padding: 21px 9px;
     margin-right: 20px;
     background: none;
+    border: none;
    
+}
+.left-bar p{
+    margin: auto auto;
 }
 .left-bar button i{
     font-size: 28px;
 
 }
-.left-bar p{
+.left-bar p a{
     font-size: 32px;
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+
+    line-height: 24px;
+    text-transform: uppercase;
+
+    color: #fff;
 }
 
 .left-bar{
@@ -328,9 +350,19 @@ html,body{
     border-radius: 18px;
 }
 
+#app .img{
+    width: 200px;
+    height: 200px;
+    overflow-y: hidden;
+
+}
+
+
+
 #app .img img{
-    max-width: 240px;
-    max-height: 319px;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
 }
 
 #app button:hover{
@@ -345,7 +377,9 @@ html,body{
 }
 
 #app .tov {
-    
+    background: #FFFFFF;
+border: 1px solid #F3F3F3;
+border-radius: 40px;
    padding: 20px;
     box-shadow: none; /* Сначала убедитесь, что box-shadow не применяется */
         
@@ -759,7 +793,7 @@ html,body{
     font-weight: 400;
     text-transform: uppercase;
     color: #fff;
-    background-color: #0056B3;
+    background: linear-gradient(to right,#0056B3 0,#1378e3 100%) no-repeat;
     transition: .3s;
     cursor: pointer;
     border: none;
@@ -808,7 +842,7 @@ html,body{
     font-weight: 400;
     text-transform: uppercase;
     color: #fff;
-    background-color: #0056B3;
+    background: linear-gradient(to right,#0056B3 0,#1378e3 100%) no-repeat;
     transition: .3s;
     cursor: pointer;
     border: none;
