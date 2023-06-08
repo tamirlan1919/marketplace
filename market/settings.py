@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -125,6 +125,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+EMAIL_USE_TLS = True 
+EMAIL_HOST = 'smtp.mail.ru' 
+EMAIL_HOST_USER = 'tchinchaev@bk.ru'
+DEFAULT_FROM_EMAIL = 'tchinchaev@bk.ru'
+EMAIL_HOST_PASSWORD = 'P6GuFqFcq5hzVHd1Eciu' 
+EMAIL_PORT = 587 
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')

@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+{% autoescape off %}
+<h2>Activation Link</h2>
+<p>Hello {{ user.username }},</p>
+<p>Click the following link to activate your account:</p>
+<a href="{{ domain }}{% url 'activate' uidb64=uid token=token %}">Activate Account</a>
+
+{% endautoescape %}
+
+{% endblock %}

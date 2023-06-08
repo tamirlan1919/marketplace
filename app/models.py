@@ -10,9 +10,8 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField('User',on_delete=models.CASCADE)
+    user = models.OneToOneField('User',on_delete=models.CASCADE,null=True)
     phone_number = models.CharField(max_length=20,null=True)
-    verification_code = models.CharField(max_length=6, null=True, blank=True)
     user_picture = models.ImageField('Изображения пользователя',upload_to='profile_pictures/')
     contact_info = models.CharField('Контактная информация',max_length=100)
     notification_settings = models.BooleanField('Уведомления',default=True)

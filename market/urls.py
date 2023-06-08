@@ -26,8 +26,11 @@ urlpatterns = [
     path('clothes/<int:id_clothes>/',views.show_sub_tovar,name = 'show_tovar'),
     path('products/<int:cat_id>/', views.products_by_category_view, name='products_by_category'),
     path('login/',views.user_login,name='login'),
-    path('register/', views.register, name='register'),
+    path('register/', views.signup, name='register'),
     path('logout/', views.user_logout, name='logout'),
+    path('form/', views.index, name = 'index'), 
+    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
+
 
 ]
 
