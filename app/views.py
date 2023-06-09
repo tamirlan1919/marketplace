@@ -15,9 +15,13 @@ from django.template.loader import render_to_string
 from .token import account_activation_token 
 from django.contrib.auth.models import User 
 from django.core.mail import send_mail
-from 
+from .models import UserProfile
+ 
 from django.core.mail import EmailMessage 
 # Create your views here.
+
+
+
 
 
 def index(request):
@@ -88,6 +92,11 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token): 
         user.is_active = True 
         user.save() 
+        
+        user_profile = get_object_or_404(UserProfile, user=user)
+        user_profile.user = User.objects.get(username=user_profile.user.username)
+        user_profile.save()
+
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.') 
     else: 
         return HttpResponse('Activation link is invalid!') 

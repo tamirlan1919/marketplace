@@ -1,16 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 
 # Create your models here.
-
-class User(AbstractUser):
-    # Исправленные связи
-    groups = models.ManyToManyField('auth.Group', related_name='app_users', blank=True)
-    user_permissions = models.ManyToManyField('auth.Permission', related_name='app_users', blank=True)
+User = get_user_model()
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField('User',on_delete=models.CASCADE,null=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     phone_number = models.CharField(max_length=20,null=True)
     user_picture = models.ImageField('Изображения пользователя',upload_to='profile_pictures/')
     contact_info = models.CharField('Контактная информация',max_length=100)
@@ -25,13 +22,7 @@ class Category(models.Model):
     def __str__(self) -> str:
         return f'{self.name} {self.podname}'
 
-class Categoryy(models.Model):
-    name = models.CharField('Категория', max_length=100)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children')
 
-
-    def __str__(self) -> str:
-        return f'{self.name} {self.podname}'
     
 
 
@@ -75,7 +66,7 @@ class ProductImage(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ManyToManyField('Product', through='OrderItem')
     total_price = models.DecimalField('Итоговая сумма',max_digits=10, decimal_places=2)
     status = models.CharField('Статус',max_length=20)
@@ -86,6 +77,11 @@ class OrderItem(models.Model):
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
 
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
 
 class ReviewImage(models.Model):
     image = models.ImageField('Изображение', upload_to='review/pictures/')
@@ -101,7 +97,7 @@ class Review(models.Model):
 
 
 class SellerProfile(models.Model):
-    user = models.OneToOneField('User',on_delete=models.CASCADE,null=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     user_picture = models.ImageField('Изображения продавца',upload_to='profile_pictures/',null=True)
     contact_info = models.CharField('Контактная информация',max_length=100,null=True)
     notification_settings = models.BooleanField('Уведомления',default=True,null=True)
