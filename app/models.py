@@ -1,18 +1,36 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
-
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 # Create your models here.
 User = get_user_model()
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
+    name = models.CharField('Имя',max_length=40,blank=True,null=True)
+    second_name = models.CharField('Фамилия',max_length=40,blank=True,null=True)
+
+    last_name = models.CharField('Отчевство',max_length=40,blank=True,null=True)
+    date_br = models.DateField(null=True,blank=True)
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     phone_number = models.CharField(max_length=20,null=True)
-    user_picture = models.ImageField('Изображения пользователя',upload_to='profile_pictures/')
-    contact_info = models.CharField('Контактная информация',max_length=100)
+    user_picture = models.ImageField('Изображения пользователя',upload_to='profile_pictures/',null=True,blank=True)
+    address_city = models.CharField('Адрес доставки (Город)',max_length=70,null=True)
+    address_street = models.CharField('Адрес доставки (Улица)',max_length=70,null=True)
+    address_house = models.CharField('Адрес доставки (Дом)',max_length=70,null=True)
+    address_podezd = models.CharField('Адрес доставки (Подъезд)',max_length=70,null=True,blank=True)
+    address_kv = models.CharField('Адрес доставки (Квартира)',max_length=70,null=True,blank=True)
+    comment = models.TextField('Комментарий',null=True,blank=True)
     notification_settings = models.BooleanField('Уведомления',default=True)
 
+    def __str__(self) -> str:
+        return f'{self.user}'
 class Category(models.Model):
     name = models.CharField('Категория',max_length=100)
     podname = models.CharField('Подкатегория',max_length=100,null=True)

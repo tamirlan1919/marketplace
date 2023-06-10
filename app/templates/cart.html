@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'app/css/cart.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="bl-empty">
+    <div class="wrap">
+   <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+    <h1>Упс!</h1>
+    <p>Кажется ваша корзина совсем пустая =( Скорее исправлять это =)</p>
+    <button>К покупкам</button>
+</div>
+</div>
+{% endblock %}

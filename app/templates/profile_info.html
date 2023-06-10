@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'app/css/profile_info.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container profile">
+    <div class="row">
+        <h1>Личная информация</h1>
+        <div class="col-3">
+            <aside>
+                <div class="profile-card">
+                    <i class="fa-solid fa-user"></i>
+                    <p></p>
+                    <a href="{% url 'logout' %}">
+                    <button class="btn btn--icon profile-card__logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button></a>
+                </div>
+                <div class="links">
+                    <a href="{% url 'profile_user' %}" class="ls-info">Личная информация</a>
+                    <a href="{% url 'order' %}">Заказы</a>
+                    <a href="{% url 'likes' %}">Избранное</a>
+                </div>
+            </aside>
+            <img src="{{user_profile.user_picture.url}}" alt="">
+
+        </div>
+        <div class="col-8">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Имя" value="{{user_profile.name}}">
+                <input type="text" name="second_name" placeholder="Фамилия" value="{{user_profile.second_name}}">
+                <input type="text" name="last_name" placeholder="Отчевство" value="{{user_profile.last_name}}"><br>
+                <input type="date" name="date_br" value="{{user_profile.date_br}}">
+                <select name="gender" value{{user_profile.gender}}>
+                    <option value="M">Мужчина</option>
+                    <option value="F">Женщина</option>
+                </select>
+                <input type="tel" name="phone_number" placeholder="Номер телефона" value="{{user_profile.phone_number}}"><br>
+                <hr>
+                <h2>Адрес доставки</h2>
+                <input type="text" name="address_city" placeholder="Адрес доставки (Город)" value="{{user_profile.address_city}}">
+                <input type="text" name="address_street" placeholder="Адрес доставки (Улица)" value="{{user_profile.address_street}}">
+                <input type="text" name="address_house" placeholder="Адрес доставки (Дом)" value="{{user_profile.address_house}}">
+                <input type="text" name="address_podezd" placeholder="Адрес доставки (Подъезд)" value="{{user_profile.address_podezd}}">
+                <input type="text" name="address_kv" placeholder="Адрес доставки (Квартира)" value="{{user_profile.address_kv}}"><br>
+                <textarea name="comment" placeholder="Комментарий" value = "{{user_profile.comment}}">{{user_profile.comment}}</textarea><br>
+                <hr>
+                <h2>Уведомления</h2>
+                <p>Получать персональные предложения и новости</p>
+                <div class="form-check form-switch">
+                    <input class="form-check-сheckbox" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="notification_settings" checked>
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Получать новости</label>
+                  </div>
+                  <hr>
+                  <h2>Изображение профиля</h2>
+                  <input type="file"  name="user_picture"><br>
+                <button type="submit" class="save">Сохранить</button>
+                <button type="resert" class="reset">Отмена</button>
+            </form>
+        </div>
+
+        
+    </div>
+</div>
+
+{% endblock %}

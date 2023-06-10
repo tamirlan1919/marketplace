@@ -30,6 +30,10 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('form/', views.index, name = 'index'), 
     path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
+    path('user/profile/',views.profile_user,name='profile_user'),
+    path('cart/',views.cart,name='cart'),
+    path('like/',views.likes, name='likes'),
+    path('order/',views.order,name='order')
 
 
 ]

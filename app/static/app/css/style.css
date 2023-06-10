@@ -771,11 +771,17 @@ border-radius: 40px;
 }
 .sec-login{
     margin-top: 50px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,.1);
+    
+
+    
 }
 
 .sec-login form{
     margin-top: 50px;
-
+    
     margin: 0 auto;
 }
 
@@ -801,7 +807,6 @@ border-radius: 40px;
 
 .sec-reg , .sec-login{
     height: 100vh;
-    background-color: #F4F4F4;
 }
 
 .sec-reg-wrapper , .sec-log-wrapper {
@@ -812,10 +817,10 @@ border-radius: 40px;
 .sec-reg .reg-info , .sec-login .log-info{
 
     max-width: 460px;
-
+    text-align: center;
     background: #fff;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
-    border-radius: 4px;
+    border-radius: 40px;
     margin: 0 auto;
     padding: 40px;
     box-sizing: border-box;
@@ -867,4 +872,98 @@ border-radius: 40px;
 
 .top .search{
     display: flex;
+}
+
+.profile-card{
+    background: linear-gradient(115.76deg,rgba(0, 86, 179,.09) 9.51%,rgba(19, 120, 227,.09) 66.27%);
+    border-radius: 24px;
+    padding: 40px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.profile-card i{
+    font-size: 32px;
+}
+.profile-card button{
+    justify-content: flex-end;
+    padding: 0;
+}
+.profile{
+    padding-top: 60px;
+    padding-bottom: 30px;
+}
+
+.profile input{
+    background: #fff;
+    border: 1px solid rgba(16,10,28,.15);
+    border-radius: 6px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding: 8px 16px;
+    
+    
+}
+
+.profile select{
+    background: #fff;
+    border: 1px solid rgba(16,10,28,.15);
+    border-radius: 6px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+}
+
+.profile h1{
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 900;
+}
+
+.profile h2{
+    margin-top: 50px;
+}
+
+.profile button{
+
+}
+
+.profile .save{
+    text-transform: uppercase;
+    padding: 10px;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    margin-top: 40px;
+    background: linear-gradient(to right,#0056B3 0,#1378e3 100%) no-repeat;
+    margin-right: 20px;
+
+}
+
+.profile .reset{
+    text-transform: uppercase;
+    padding: 10px;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    margin-top: 40px;
+    background-color: #9d9da5;
+}
+
+.profile .form-check{
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+.profile img{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    object-fit: cover;
+    position: absolute;
+    right: 5%;
+    top: 3%;
+}
+.profile .links a:hover{
+    color: #0056B3;
 }

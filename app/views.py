@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponse 
 from django.shortcuts import render, redirect 
 from django.contrib.auth import login, authenticate 
-from .forms import SignupForm 
+from .forms import SignupForm,UserProfileForm
 from django.contrib.sites.shortcuts import get_current_site 
 from django.utils.encoding import force_bytes, force_str 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode 
@@ -16,7 +16,8 @@ from .token import account_activation_token
 from django.contrib.auth.models import User 
 from django.core.mail import send_mail
 from .models import UserProfile
- 
+from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage 
 # Create your views here.
 
@@ -59,25 +60,27 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            # save form in the memory not in database
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
+            email = form.cleaned_data['email']
+            User = get_user_model()
+            try:
+                existing_user = User.objects.get(email=email)
+                return HttpResponse('This email was in database')
+            except User.DoesNotExist:
+                user = form.save(commit=False)
+                user.is_active = False
+                user.save()
 
-            # Get activation link
-            current_site = get_current_site(request)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = account_activation_token.make_token(user)
-            activation_link = f"http://{current_site.domain}/activate/{uid}/{token}/"
+                current_site = get_current_site(request)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                token = account_activation_token.make_token(user)
+                activation_link = f"http://{current_site.domain}/activate/{uid}/{token}/"
 
-            # Create email subject and message
-            mail_subject = 'Activation link has been sent to your email id'
-            message = f"Hello {user.username},\n\nClick the following link to activate your account:\n\n{activation_link}"
+                mail_subject = 'Activation link has been sent to your email id'
+                message = f"Hello {user.username},\n\nClick the following link to activate your account:\n\n{activation_link}"
 
-            # Send email
-            send_mail(mail_subject, message, 'tchinchaev@bk.ru', [user.email])
+                send_mail(mail_subject, message, 'tchinchaev@bk.ru', [user.email])
 
-            return HttpResponse('Please confirm your email address to complete the registration')
+                return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = SignupForm()
     return render(request, 'register.html', {'form': form})
@@ -103,7 +106,7 @@ def activate(request, uidb64, token):
 
 def user_logout(request):
     logout(request)
-    return redirect('home')
+    return redirect('/')
 
 def user_login(request):
     if request.method == 'POST':
@@ -115,3 +118,52 @@ def user_login(request):
     else:
         form = UserLoginForm()
     return render(request, 'login.html', {'form':form})
+
+@login_required
+def profile_user(request):
+    user = request.user
+    user_profile = user.userprofile
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            # Получение текущего пользователя
+            user = request.user
+
+            # Сохранение данных профиля пользователя
+            profile = user.userprofile
+            profile.name = form.cleaned_data.get('name')
+            profile.second_name = form.cleaned_data.get('second_name')
+            profile.last_name = form.cleaned_data.get('last_name')
+            profile.date_br = form.cleaned_data.get('date_br')
+            profile.gender = form.cleaned_data.get('gender')
+            profile.phone_number = form.cleaned_data.get('phone_number')
+            profile.address_city = form.cleaned_data.get('address_city')
+            profile.address_street = form.cleaned_data.get('address_street')
+            profile.address_house = form.cleaned_data.get('address_house')
+            profile.address_podezd = form.cleaned_data.get('address_podezd')
+            profile.address_kv = form.cleaned_data.get('address_kv')
+            profile.comment = form.cleaned_data.get('comment')
+            profile.notification_settings = form.cleaned_data.get('notification_settings')
+            profile.user_picture = form.cleaned_data.get('user_picture')
+            profile.save()
+
+            return redirect('/')  # Перенаправление на страницу профиля
+    else:
+        form = UserProfileForm()
+    
+    return render(request, 'profile_info.html',{'user_profile': user_profile,'form': form})
+
+
+@login_required
+def cart(request):
+    return render(request,'cart.html')
+
+
+@login_required
+def likes(request):
+    return render(request,'likes.html')
+
+@login_required
+def order(request):
+    return render(request,'orders.html')

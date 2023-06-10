@@ -1,0 +1,18 @@
+.profile .links a{
+    display: block;
+    text-decoration: none;
+    color: #100a1c;
+    margin-bottom: 15px;
+    
+}
+.profile .links{
+    margin-top: 20px;
+}
+.profile .links .ls-info{
+    color: #000;
+    font-weight: 900;
+}
+.profile{
+    margin-bottom: 100px;
+
+}

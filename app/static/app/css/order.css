@@ -1,0 +1,19 @@
+.orders .links a{
+    display: block;
+    text-decoration: none;
+    color: #100a1c;
+    margin-bottom: 15px;
+    
+}
+.orders{
+    padding-top: 100px;
+    margin-bottom: 100px;
+
+}
+.orders .links{
+    margin-top: 20px;
+}
+.orders .links .order{
+    color: #000;
+    font-weight: 900;
+}

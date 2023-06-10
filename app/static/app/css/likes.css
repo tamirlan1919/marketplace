@@ -1,0 +1,18 @@
+.likes .links a{
+    display: block;
+    text-decoration: none;
+    color: #100a1c;
+    margin-bottom: 15px;
+    
+}
+.likes .links{
+    margin-top: 20px;
+}
+.likes .links .like{
+    color: #000;
+    font-weight: 900;
+}
+.likes{
+    padding-top: 100px;
+    margin-bottom: 100px;
+}

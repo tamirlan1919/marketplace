@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'app/css/likes.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/profile_info.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container likes">
+    <div class="row">
+        <div class="col-3">
+            <aside>
+                <div class="profile-card">
+                    <i class="fa-solid fa-user"></i>
+                    <p></p>
+                    <a href="{% url 'logout' %}">
+                    <button class="btn btn--icon profile-card__logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button></a>
+                </div>
+                <div class="links">
+                    <a href="{% url 'profile_user' %}" class="ls-info">Личная информация</a>
+                    <a href="{% url 'order' %}">Заказы</a>
+                    <a href="{% url 'likes' %}" class="like">Избранное</a>
+                </div>
+            </aside>
+
+        </div>
+        <div class="col">
+            <h1>Избранное</h1>
+<p>Вы еще ничего не добавили в избранное</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
