@@ -53,11 +53,28 @@
         <div class="lst-button">
           <form action="" method="POST">
             {% csrf_token %}
-
-          <button class="add-cart" name="add_product" data-product-id="{{ tovar.id }}"><i class="fa-sharp fa-solid fa-cart-shopping"></i>В корзину</button>
-          <button class="add-heart" name="add_like" data-product-id="{{ tovar.id }}"><i class="fa-regular fa-heart"></i>В избранное</button>
-            <button class="add-heart"><i class="fa-solid fa-share-nodes"></i></button>
-          </form>
+            {% if has_items %}
+                <button class="remove_tovar" name="remove_tovar" data-product-id="{{ tovar.id }}">
+                    <i class="fa-sharp fa-solid fa-cart-shopping"></i>Удалить из корзины
+                </button>
+            {% else %}
+                <button class="add-cart" name="add_product" data-product-id="{{ tovar.id }}">
+                    <i class="fa-sharp fa-solid fa-cart-shopping"></i>В корзину
+                </button>
+            {% endif %}
+            {% if has_item_like %}
+            <button class="add-heart" name="add_like" data-product-id="{{ tovar.id }}">
+                <i class="fa-regular fa-heart"></i>Удалить из избранных
+            </button>
+            {% else %}
+            <button class="add-heart" name="remove_like" data-product-id="{{ tovar.id }}">
+                <i class="fa-regular fa-heart"></i>В избранные
+            </button>
+            {% endif %}
+            <button class="add-heart">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+        </form>
 
         </div>
       </div>
@@ -179,55 +196,109 @@
 $(document).ready(function() {
     $('.add-cart').click(function(e) {
         e.preventDefault();
+        let button = $(this);
+        var productId = button.data('product-id');
+        var csrfToken = '{{ csrf_token }}';
 
-        var productId = $(this).data('product-id');
-
-        // Отправка AJAX-запроса на сервер
-        $.ajax({
-            type: 'POST',
-            url: '{% url "show_tovar" id_clothes=tovar.id %}',
-            data: {
-                'add_product': true,
-                'csrfmiddlewaretoken': '{{ csrf_token }}'
-            },
-            success: function(response) {
-                alert(response.message);
-                // Дополнительные действия после успешного добавления в корзину, если необходимо
-            },
-            error: function(response) {
-                alert('Произошла ошибка');
-                // Дополнительные действия при ошибке, если необходимо
-            }
-        });
+        if (button.attr('name') === 'add_product') {
+            // Добавление товара в корзину
+            $.ajax({
+                type: 'POST',
+                url: '{% url "show_tovar" id_clothes=tovar.id %}',
+                data: {
+                    'add_product': true,
+                    'csrfmiddlewaretoken': csrfToken
+                },
+                success: function(response) {
+                    button.text('Убрать из корзины');
+                    button.attr('name', 'remove_tovar');
+                    // Дополнительные действия после успешного добавления в корзину, если необходимо
+                },
+                error: function(response) {
+                    alert('Произошла ошибка');
+                    // Дополнительные действия при ошибке, если необходимо
+                }
+            });
+        } else if (button.attr('name') === 'remove_tovar') {
+            // Удаление товара из корзины
+            $.ajax({
+                type: 'POST',
+                url: '{% url "show_tovar" id_clothes=tovar.id %}',
+                data: {
+                    'remove_tovar': true,
+                    'csrfmiddlewaretoken': csrfToken
+                },
+                success: function(response) {
+                    button.text('В корзину');
+                    button.attr('name', 'add_product');
+                    // Дополнительные действия после успешного удаления из корзины, если необходимо
+                },
+                error: function(response) {
+                    alert('Произошла ошибка');
+                    // Дополнительные действия при ошибке, если необходимо
+                }
+            });
+        }
     });
 });
 </script>
 <script>
-  $(document).ready(function() {
+ 
+ $(document).ready(function() {
     $('.add-heart').click(function(e) {
         e.preventDefault();
+        let button = $(this);
+        var productId = button.data('product-id');
+        var csrfToken = '{{ csrf_token }}';
 
-        var productId = $(this).data('product-id');
-
-        // Отправка AJAX-запроса на сервер
-        $.ajax({
-            type: 'POST',
-            url: '{% url "show_tovar" id_clothes=tovar.id %}',
-            data: {
-                'add_like': true,
-                'csrfmiddlewaretoken': '{{ csrf_token }}'
-            },
-            success: function(response) {
-                alert(response.message);
-                // Дополнительные действия после успешного добавления в корзину, если необходимо
-            },
-            error: function(response) {
-                alert('Произошла ошибка');
-                // Дополнительные действия при ошибке, если необходимо
-            }
-        });
+        if (button.attr('name') === 'add_like') {
+            // Добавление товара в избранные
+            $.ajax({
+                type: 'POST',
+                url: '{% url "show_tovar" id_clothes=tovar.id %}',
+                data: {
+                    'add_like': true,
+                    'csrfmiddlewaretoken': csrfToken
+                },
+                success: function(response) {
+                    button.text('Удалить из избранных');
+                    button.attr('name', 'remove_like');
+                    // Дополнительные действия после успешного добавления в избранные, если необходимо
+                },
+                error: function(response) {
+                    alert('Произошла ошибка');
+                    // Дополнительные действия при ошибке, если необходимо
+                }
+            });
+        } else if (button.attr('name') === 'remove_like') {
+            // Удаление товара из избранных
+            $.ajax({
+                type: 'POST',
+                url: '{% url "show_tovar" id_clothes=tovar.id %}',
+                data: {
+                    'remove_like': true,
+                    'csrfmiddlewaretoken': csrfToken
+                },
+                success: function(response) {
+                    button.text('В избранные');
+                    button.attr('name', 'add_like');
+                    // Дополнительные действия после успешного удаления из избранных, если необходимо
+                },
+                error: function(response) {
+                    alert('Произошла ошибка');
+                    // Дополнительные действия при ошибке, если необходимо
+                }
+            });
+        }
     });
 });
+
+
+</script>
+
+<script>
+  let add_tovar = document.getElementsByName('add_tovar')
+  console.log(add_tovar)
 </script>
 
 {% endblock %}

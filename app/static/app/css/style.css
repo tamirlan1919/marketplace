@@ -319,6 +319,9 @@ footer ul li{
 html,body{
     overflow-x: hidden;
 }
+#app{
+    padding-bottom: 50px;
+}
 
 #app .price{
     margin-top: 8px;

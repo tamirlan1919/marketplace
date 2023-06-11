@@ -101,6 +101,21 @@ class Cart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
 
+    def increase_quantity(self):
+        self.quantity += 1
+        self.product.sale_price*=self.quantity
+        self.product.price*=self.quantity
+        self.save()
+
+    def decrease_quantity(self):
+        if self.quantity > 1:
+            self.quantity -= 1
+            self.product.sale_price*=self.quantity
+            self.product.price*=self.quantity
+            self.save()
+        else:
+            self.delete()
+    
 
 
 class Like(models.Model):

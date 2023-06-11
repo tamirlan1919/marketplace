@@ -49,7 +49,12 @@ def products_by_category_view(request, cat_id:int):
 
 def show_sub_tovar(request,id_clothes:int):
     tovar = get_object_or_404(Product,id = id_clothes)
-    
+    cart_items = Cart.objects.filter(user=request.user)
+    like_items = Like.objects.filter(user = request.user)
+    # Проверка наличия товара в корзине
+    has_items = bool(cart_items)
+    #Проверка наличия товара в избранных
+    has_item_like = bool(like_items)
     if request.method == 'POST':
         if request.POST.get('add_product'):
             cart_item,created = Cart.objects.get_or_create(user = request.user,product=tovar)
@@ -58,14 +63,25 @@ def show_sub_tovar(request,id_clothes:int):
                 cart_item.save()
             
             return JsonResponse({'message': 'Товар добавлен в корзину'})
+        elif 'remove_tovar' in request.POST:
+            
+            cart_item = Cart.objects.get(user=request.user, product = tovar)
+            print(cart_item)
+            cart_item.delete()
         elif request.POST.get('add_like'):
             like_item,created = Like.objects.get_or_create(user = request.user,product=tovar)
-            if  created:
-                return JsonResponse({'message': 'Товар добавлен в избранное'})
-            else:
-                return JsonResponse({'message': 'Товар уже есть в избранном'})
+            # if  created:
+            #     return JsonResponse({'message': 'Товар добавлен в избранное'})
+            # else:
+            #     return JsonResponse({'message': 'Товар уже есть в избранном'})
+    elif 'remove_like' in request.POST:
+        try:
+            like_item = Like.objects.get(user=request.user, product=tovar)
+            like_item.delete()
+            return JsonResponse({'message': 'Товар удален из избранных'})
+        except Like.DoesNotExist:
+            return JsonResponse({'message': 'Товар не найден в избранных'})
 
-        return JsonResponse({'message': 'Произошла ошибка'})
 
             
 
@@ -75,7 +91,8 @@ def show_sub_tovar(request,id_clothes:int):
     questions = Question.objects.all()
     return render(request,'sub_tovar.html',{'tovar':tovar,'tovars':tovars,'reviews':reviews,
                                             'len':len(reviews), 'quest':questions,
-                                            'len_quest':len(questions)})
+                                            'len_quest':len(questions),'has_items': has_items,
+                                            'has_item_like':has_item_like})
 
 
 
@@ -182,28 +199,24 @@ def profile_user(request):
 def cart(request):
     
 
-    user = request.user
-    cart_items = Cart.objects.filter(user=user)
+   
 
     if request.method == 'POST':
         item_id = request.POST.get('item_id')
+        item = Cart.objects.get(id=item_id)
 
-        try:
-            cart_item = Cart.objects.get(user=user, id=item_id)
-            
-            if request.POST.get('add'):
-                cart_item.quantity += 1
-                cart_item.save()
-            elif request.POST.get('remove'):
-                cart_item.quantity -= 1
-                cart_item.save()
-            elif request.POST.get('delete'):
-                cart_item.delete()
-        
-        except Cart.DoesNotExist:
-            pass
+        if 'add_tovar' in request.POST:
+            item.decrease_quantity()  # Уменьшить количество товара на 1
+        elif 'remove_tovar' in request.POST:
+            item.increase_quantity()  # Увеличить количество товара на 1
+        elif 'delete' in request.POST:
+            item.delete()
+        return redirect('cart')  # Перенаправляем обратно на страницу корзины
 
-    context = {'cart_items': cart_items,'cart_item':cart_item}
+    user = request.user
+    cart_items = Cart.objects.filter(user=user)
+
+    context = {'cart_items': cart_items}
     return render(request, 'cart.html', context)
 
 

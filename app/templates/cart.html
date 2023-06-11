@@ -27,10 +27,10 @@
             <div class="counter">
                 <form action="{% url 'cart' %}" method="POST">
                     {% csrf_token %}
-                    <input name="item_id" value="{{ item.id }}">  <!-- Добавляем скрытое поле с item_id -->
-                    <button type="submit" name="add">-</button>
+                    <input type="hidden"  name="item_id" value="{{ item.id }}">  <!-- Добавляем скрытое поле с item_id -->
+                    <button type="submit" name="add_tovar">-</button>
                     <span>{{ item.quantity }}</span>
-                    <button type="submit" name="remove">+</button>
+                    <button type="submit" name="remove_tovar">+</button>
                 </form>
             </div>
             <div class="price-cart">
@@ -42,7 +42,7 @@
             <div class="mod">
                 <form action="{% url 'cart' %}" method="POST">
                     {% csrf_token %}
-                    <input type="hidden" name="item_id" value="{{cart_item.id}}">
+                    <input type="hidden" name="item_id" value="{{item.id}}">
                     <button type="submit" name="like"><i class="fa-regular fa-heart"></i></button>
                     <button type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
                 </form>
@@ -59,7 +59,7 @@
         <i class="fa-sharp fa-solid fa-cart-shopping"></i>
          <h1>Упс!</h1>
          <p>Кажется ваша корзина совсем пустая =( Скорее исправлять это =)</p>
-         <button>К покупкам</button>
+         <a href="{% url 'main' %}"><button>К покупкам</button></a>
      </div>
     </div>
     {% endif %}
