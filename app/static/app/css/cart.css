@@ -90,3 +90,12 @@
     text-decoration: line-through;
     margin-top: 4px;
 }
+.mod{
+    position: relative;
+    top: -30%;
+    right: -82%
+}
+.mod button{
+    border: none;
+    background-color: #fff;
+}

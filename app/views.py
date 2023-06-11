@@ -180,9 +180,30 @@ def profile_user(request):
 
 @login_required
 def cart(request):
+    
+
     user = request.user
     cart_items = Cart.objects.filter(user=user)
-    context = {'cart_items': cart_items}
+
+    if request.method == 'POST':
+        item_id = request.POST.get('item_id')
+
+        try:
+            cart_item = Cart.objects.get(user=user, id=item_id)
+            
+            if request.POST.get('add'):
+                cart_item.quantity += 1
+                cart_item.save()
+            elif request.POST.get('remove'):
+                cart_item.quantity -= 1
+                cart_item.save()
+            elif request.POST.get('delete'):
+                cart_item.delete()
+        
+        except Cart.DoesNotExist:
+            pass
+
+    context = {'cart_items': cart_items,'cart_item':cart_item}
     return render(request, 'cart.html', context)
 
 

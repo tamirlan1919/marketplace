@@ -25,9 +25,13 @@
 
             </div>
             <div class="counter">
-                <button>-</button>
-                 <span>{{item.quantity}}</span>
-                 <button>+</button>
+                <form action="{% url 'cart' %}" method="POST">
+                    {% csrf_token %}
+                    <input name="item_id" value="{{ item.id }}">  <!-- Добавляем скрытое поле с item_id -->
+                    <button type="submit" name="add">-</button>
+                    <span>{{ item.quantity }}</span>
+                    <button type="submit" name="remove">+</button>
+                </form>
             </div>
             <div class="price-cart">
                 <p class="sale_price">{{item.product.sale_price}} &#8381</p>
@@ -35,7 +39,16 @@
 
              </div>
             </div>
+            <div class="mod">
+                <form action="{% url 'cart' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_id" value="{{cart_item.id}}">
+                    <button type="submit" name="like"><i class="fa-regular fa-heart"></i></button>
+                    <button type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
+                </form>
+            </div>
         </div>
+
     </div>
 </div>
 
@@ -51,5 +64,9 @@
     </div>
     {% endif %}
 
+
+{% endblock %}
+
+{% block ajax %}
 
 {% endblock %}
