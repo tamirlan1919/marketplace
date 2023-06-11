@@ -7,14 +7,49 @@
 {% endblock %}
 
 {% block content %}
+{% if cart_items %}
+<div class="container cart">
+    <div class="row">
 
 
-<div class="bl-empty">
+
+    {% for item in cart_items %}
+    <div class="col-9">
+        <div class="wrap">
+            <div class="image">
+               <a href="{% url 'show_tovar' item.product.id %}"><img src="{{item.product.picture.url}}" alt=""></a> 
+            </div>
+            <div class="info">
+                <p>{{item.product.brand}}</p>
+                <p>{{item.product.name}}</p>
+
+            </div>
+            <div class="counter">
+                <button>-</button>
+                 <span>{{item.quantity}}</span>
+                 <button>+</button>
+            </div>
+            <div class="price-cart">
+                <p class="sale_price">{{item.product.sale_price}} &#8381</p>
+                <p class="price"><s>{{item.product.price}} &#8381</s></p>
+
+             </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endfor %}
+    {% else %}
+    <div class="bl-empty">
     <div class="wrap">
-   <i class="fa-sharp fa-solid fa-cart-shopping"></i>
-    <h1>Упс!</h1>
-    <p>Кажется ваша корзина совсем пустая =( Скорее исправлять это =)</p>
-    <button>К покупкам</button>
-</div>
-</div>
+        <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+         <h1>Упс!</h1>
+         <p>Кажется ваша корзина совсем пустая =( Скорее исправлять это =)</p>
+         <button>К покупкам</button>
+     </div>
+    </div>
+    {% endif %}
+
+
 {% endblock %}

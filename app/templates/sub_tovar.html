@@ -51,9 +51,13 @@
         </div>
         
         <div class="lst-button">
-            <button class="add-cart"><i class="fa-sharp fa-solid fa-cart-shopping"></i>В коризну</button>
-            <button class="add-heart"><i class="fa-regular fa-heart"></i>В избранное</button>
+          <form action="" method="POST">
+            {% csrf_token %}
+
+          <button class="add-cart" name="add_product" data-product-id="{{ tovar.id }}"><i class="fa-sharp fa-solid fa-cart-shopping"></i>В корзину</button>
+          <button class="add-heart" name="add_like" data-product-id="{{ tovar.id }}"><i class="fa-regular fa-heart"></i>В избранное</button>
             <button class="add-heart"><i class="fa-solid fa-share-nodes"></i></button>
+          </form>
 
         </div>
       </div>
@@ -165,5 +169,65 @@
 
     </div>
   </div>
+
+{% endblock %}
+
+{% block ajax %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.add-cart').click(function(e) {
+        e.preventDefault();
+
+        var productId = $(this).data('product-id');
+
+        // Отправка AJAX-запроса на сервер
+        $.ajax({
+            type: 'POST',
+            url: '{% url "show_tovar" id_clothes=tovar.id %}',
+            data: {
+                'add_product': true,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                alert(response.message);
+                // Дополнительные действия после успешного добавления в корзину, если необходимо
+            },
+            error: function(response) {
+                alert('Произошла ошибка');
+                // Дополнительные действия при ошибке, если необходимо
+            }
+        });
+    });
+});
+</script>
+<script>
+  $(document).ready(function() {
+    $('.add-heart').click(function(e) {
+        e.preventDefault();
+
+        var productId = $(this).data('product-id');
+
+        // Отправка AJAX-запроса на сервер
+        $.ajax({
+            type: 'POST',
+            url: '{% url "show_tovar" id_clothes=tovar.id %}',
+            data: {
+                'add_like': true,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                alert(response.message);
+                // Дополнительные действия после успешного добавления в корзину, если необходимо
+            },
+            error: function(response) {
+                alert('Произошла ошибка');
+                // Дополнительные действия при ошибке, если необходимо
+            }
+        });
+    });
+});
+</script>
 
 {% endblock %}

@@ -30,8 +30,33 @@
 
         </div>
         <div class="col">
+            {% if likes_items %}
+            <div class="container">
+                <div class="row">
+                    {% for item in likes_items %}
+                    
+                    <a href="{% url 'show_tovar' item.id %}">
+                        <div class="col-3 tov">
+                            <div class="img"><img src="{{item.product.picture.url}}" alt=""></div>
+                            {% if item.is_on_sale %}
+                            <p class="price">{{item..product.price}}&#8381</p><span class="del"></span>
+                            {% else %}
+                            <p class="price">{{item.product.price}}&#8381</p>
+                            {% endif %}
+                            <p class="brand">{{item.product.brand}} <span>/</span> <span>{{item.product.name}}</span> </p>
+                            <button>В коризну</button>
+                        </div>
+                    </a>
+                        
+                    
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
             <h1>Избранное</h1>
-<p>Вы еще ничего не добавили в избранное</p>
+            <p>Вы еще ничего не добавили в избранное</p>
+            {% endif %}
+            
         </div>
     </div>
 </div>

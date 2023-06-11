@@ -19,6 +19,8 @@ from .models import UserProfile
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage 
+from .models import Cart,Like
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -47,6 +49,27 @@ def products_by_category_view(request, cat_id:int):
 
 def show_sub_tovar(request,id_clothes:int):
     tovar = get_object_or_404(Product,id = id_clothes)
+    
+    if request.method == 'POST':
+        if request.POST.get('add_product'):
+            cart_item,created = Cart.objects.get_or_create(user = request.user,product=tovar)
+            if not created:
+                cart_item.quantity+=1
+                cart_item.save()
+            
+            return JsonResponse({'message': 'Товар добавлен в корзину'})
+        elif request.POST.get('add_like'):
+            like_item,created = Like.objects.get_or_create(user = request.user,product=tovar)
+            if  created:
+                return JsonResponse({'message': 'Товар добавлен в избранное'})
+            else:
+                return JsonResponse({'message': 'Товар уже есть в избранном'})
+
+        return JsonResponse({'message': 'Произошла ошибка'})
+
+            
+
+
     tovars = Product.objects.all()
     reviews = Review.objects.all()
     questions = Question.objects.all()
@@ -157,12 +180,18 @@ def profile_user(request):
 
 @login_required
 def cart(request):
-    return render(request,'cart.html')
+    user = request.user
+    cart_items = Cart.objects.filter(user=user)
+    context = {'cart_items': cart_items}
+    return render(request, 'cart.html', context)
 
 
 @login_required
 def likes(request):
-    return render(request,'likes.html')
+    user = request.user
+    likes_items = Like.objects.filter(user=user)
+    context = {'likes_items': likes_items}
+    return render(request, 'likes.html', context)
 
 @login_required
 def order(request):
