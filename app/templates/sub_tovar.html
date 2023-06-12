@@ -58,7 +58,7 @@
                     <i class="fa-sharp fa-solid fa-cart-shopping"></i>Удалить из корзины
                 </button>
             {% else %}
-                <button class="add-cart" name="add_product" data-product-id="{{ tovar.id }}">
+                <button class="add-cart add-cart-{{ tovar.id }}"  id="add-cart" name="add_product" data-product-id="{{ tovar.id }}">
                     <i class="fa-sharp fa-solid fa-cart-shopping"></i>В корзину
                 </button>
             {% endif %}
@@ -67,7 +67,7 @@
                 <i class="fa-regular fa-heart"></i>Удалить из избранных
             </button>
             {% else %}
-            <button class="add-heart" name="remove_like" data-product-id="{{ tovar.id }}">
+            <button class="add-heart add-heart-{{ tovar.id }}" id="add-heart" name="add_like" data-product-id="{{ tovar.id }}">
                 <i class="fa-regular fa-heart"></i>В избранные
             </button>
             {% endif %}
@@ -102,9 +102,10 @@
     <div class="row">
       {% for item in tovars %}
       {% if item.category.name == tovar.category.name and item.category.podname == tovar.category.podname %}
-      <div class="col">
-        <a href="{% url 'show_tovar' item.id %}">
+     
           <div class="col-3 tov">
+            <a href="{% url 'show_tovar' item.id %}">
+
               <div class="img"><img src="{{item.picture.url}}" alt=""></div>
               {% if item.is_on_sale %}
               <p class="price">{{item.price}}&#8381</p><span class="del"></span>
@@ -112,10 +113,11 @@
               <p class="price">{{item.price}}&#8381</p>
               {% endif %}
               <p class="brand">{{item.brand}} <span>/</span> <span>{{item.name}}</span> </p>
+            </a>
+
               <button>В коризну</button>
           </div>
-      </a>
-      </div>
+     
       {% endif %}
       {% endfor %}
     </div>
@@ -192,9 +194,11 @@
 {% block ajax %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+<!-- <script>
 $(document).ready(function() {
-    $('.add-cart').click(function(e) {
+    $('.add-cart-{{tovar.id}}').click(function(e) {
+      $(document).on('click', '.add-cart', function(e) {
+
         e.preventDefault();
         let button = $(this);
         var productId = button.data('product-id');
@@ -211,6 +215,7 @@ $(document).ready(function() {
                 },
                 success: function(response) {
                     button.text('Убрать из корзины');
+                    
                     button.attr('name', 'remove_tovar');
                     // Дополнительные действия после успешного добавления в корзину, если необходимо
                 },
@@ -218,8 +223,12 @@ $(document).ready(function() {
                     alert('Произошла ошибка');
                     // Дополнительные действия при ошибке, если необходимо
                 }
+                
             });
-        } else if (button.attr('name') === 'remove_tovar') {
+            
+        } 
+     
+      else if (button.attr('name') === 'remove_tovar') {
             // Удаление товара из корзины
             $.ajax({
                 type: 'POST',
@@ -240,12 +249,13 @@ $(document).ready(function() {
             });
         }
     });
+  });
 });
-</script>
+</script> -->
 <script>
  
  $(document).ready(function() {
-    $('.add-heart').click(function(e) {
+    $('.add-heart-{{tovar.id}}').click(function(e) {
         e.preventDefault();
         let button = $(this);
         var productId = button.data('product-id');
@@ -296,9 +306,5 @@ $(document).ready(function() {
 
 </script>
 
-<script>
-  let add_tovar = document.getElementsByName('add_tovar')
-  console.log(add_tovar)
-</script>
 
 {% endblock %}

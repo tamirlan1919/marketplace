@@ -99,3 +99,49 @@
     border: none;
     background-color: #fff;
 }
+.cart-total{
+    background-color: #fff;
+    max-width: 390px;
+    position: relative;
+    top: -207px;
+    margin-left: 50px;
+    box-shadow: 0 0 20px rgba(0,0,0,.1);
+
+    padding: 24px;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 22px;
+    box-shadow: 0 0 20px rgba(0,0,0,.1);
+    align-items: center;
+}
+.top_price{
+    margin-bottom: 30px;
+}
+.wrap .info{
+    max-width: 260px;
+}
+.cart-total button{
+    background: linear-gradient(to right,#0056B3 0,#1378e3 100%) no-repeat;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.total{
+    display: flex;
+}
+
+.cart-total .total{
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-total .len_tovar{
+    display: flex;
+    justify-content: space-between;
+
+}

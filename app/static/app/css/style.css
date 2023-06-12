@@ -380,6 +380,7 @@ html,body{
 }
 
 #app .tov {
+    margin-right: 25px;
     background: #FFFFFF;
 border: 1px solid #F3F3F3;
 border-radius: 40px;
@@ -431,7 +432,16 @@ border-radius: 40px;
     height: 100%;
     cursor: pointer;
 }
+.remove_tovar{
+    background: #0056B3;
+    border: none;
+    color: #fff;
+    
+    font-size: 16px;
+    line-height: 20px;
 
+    border-radius: 7px;
+}
 .add-cart{
     background: #0056B3;
     border: none;

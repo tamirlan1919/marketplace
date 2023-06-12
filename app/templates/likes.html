@@ -29,14 +29,15 @@
             </aside>
 
         </div>
-        <div class="col">
+        <div class="col items">
             {% if likes_items %}
             <div class="container">
                 <div class="row">
                     {% for item in likes_items %}
                     
-                    <a href="{% url 'show_tovar' item.id %}">
                         <div class="col-3 tov">
+                            <a href="{% url 'show_tovar' item.id %}">
+
                             <div class="img"><img src="{{item.product.picture.url}}" alt=""></div>
                             {% if item.is_on_sale %}
                             <p class="price">{{item..product.price}}&#8381</p><span class="del"></span>
@@ -45,8 +46,9 @@
                             {% endif %}
                             <p class="brand">{{item.product.brand}} <span>/</span> <span>{{item.product.name}}</span> </p>
                             <button>В коризну</button>
+                        </a>
+
                         </div>
-                    </a>
                         
                     
                     {% endfor %}

@@ -9,12 +9,12 @@
 {% block content %}
 {% if cart_items %}
 <div class="container cart">
-    <div class="row">
+    <div class="row ">
 
 
 
     {% for item in cart_items %}
-    <div class="col-9">
+    <div class="col-8 ">
         <div class="wrap">
             <div class="image">
                <a href="{% url 'show_tovar' item.product.id %}"><img src="{{item.product.picture.url}}" alt=""></a> 
@@ -34,8 +34,8 @@
                 </form>
             </div>
             <div class="price-cart">
-                <p class="sale_price">{{item.product.sale_price}} &#8381</p>
-                <p class="price"><s>{{item.product.price}} &#8381</s></p>
+                <p class="sale_price">{{item.price_sale}} &#8381</p>
+                <p class="price"><s>{{item.price}} &#8381</s></p>
 
              </div>
             </div>
@@ -48,11 +48,33 @@
                 </form>
             </div>
         </div>
+        
+        {% endfor %}
 
+        <div class="cart-total">
+            
+            <h1 class="top_price">Сумма заказа</h1>
+            {% if len > 1 %}
+            <div class="len_tovar">
+                <p>{{len}} товаров на сумму</p>
+                <p>{{ total_price }} &#8381</p>
+            </div>
+            
+            {% else %}
+            <p>{{len}} товар на сумму</p>
+            <p>{{ total_price }} &#8381</p>
+            {% endif %}
+            <div class="total">
+                <h2>Итого</h2>
+                <p>{{ total_price }} &#8381</p>
+            </div>
+            <p class="text_gray">Без учета возможной стоимости доставки</p>
+            <form action="">
+                <button>Перейти к оформлению {{len}} товар</button>
+            </form>
+        </div>
     </div>
-</div>
 
-    {% endfor %}
     {% else %}
     <div class="bl-empty">
     <div class="wrap">
@@ -63,10 +85,96 @@
      </div>
     </div>
     {% endif %}
+</div>
 
 
 {% endblock %}
 
 {% block ajax %}
+
+<script>
+    $(document).ready(function() {
+        $('.increase').click(function() {
+            var item_id = $(this).data('itemid');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'action': 'increase',
+                    'item_id': item_id
+                },
+                success: function(response) {
+                    // Update quantity and total price on the page
+                    var item = response.item_id;
+                    var quantity = response.quantity;
+                    var price_sale = response.price_sale;
+                    var total_price = response.total_price;
+    
+                    $('[data-itemid="' + item + '"]').siblings('span').text(quantity);
+                    $('#total-price').text(total_price);
+                }
+            });
+        });
+    
+        $('.decrease').click(function() {
+            var item_id = $(this).data('itemid');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'action': 'decrease',
+                    'item_id': item_id
+                },
+                success: function(response) {
+                    // Update quantity and total price on the page
+                    var item = response.item_id;
+                    var quantity = response.quantity;
+                    var price_sale = response.price_sale;
+                    var total_price = response.total_price;
+    
+                    $('[data-itemid="' + item + '"]').siblings('span').text(quantity);
+                    $('#total-price').text(total_price);
+                }
+            });
+        });
+    
+        $('.delete').click(function() {
+            var item_id = $(this).data('itemid');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'action': 'delete',
+                    'item_id': item_id
+                },
+                success: function(response) {
+                    // Remove the item from the page and update total price
+                    var item = response.item_id;
+                    var total_price = response.total_price;
+    
+                    $('[data-itemid="' + item + '"]').closest('.col-9').remove();
+                    $('#total-price').text(total_price);
+    
+                    // Check if the cart is empty and display a message if so
+                    if ($('.col-9').length === 0) {
+                        $('.container.cart').html(`
+                            <div class="bl-empty">
+                                <div class="wrap">
+                                    <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+                                    <h1>Упс!</h1>
+                                    <p>Кажется ваша корзина совсем пустая =( Скорее исправлять это =)</p>
+                                    <a href="{% url 'main' %}"><button>К покупкам</button></a>
+                                </div>
+                            </div>
+                        `);
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 {% endblock %}

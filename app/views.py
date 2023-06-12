@@ -21,6 +21,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage 
 from .models import Cart,Like
 from django.http import JsonResponse
+from django.db.models import F, Sum
+
 # Create your views here.
 
 
@@ -49,38 +51,37 @@ def products_by_category_view(request, cat_id:int):
 
 def show_sub_tovar(request,id_clothes:int):
     tovar = get_object_or_404(Product,id = id_clothes)
-    cart_items = Cart.objects.filter(user=request.user)
-    like_items = Like.objects.filter(user = request.user)
+    cart_items = Cart.objects.filter(user=request.user, product=tovar)
+    like_items = Like.objects.filter(user=request.user, product=tovar)
     # Проверка наличия товара в корзине
     has_items = bool(cart_items)
     #Проверка наличия товара в избранных
     has_item_like = bool(like_items)
     if request.method == 'POST':
-        if request.POST.get('add_product'):
+        if 'add_product' in request.POST:
             cart_item,created = Cart.objects.get_or_create(user = request.user,product=tovar)
+            
             if not created:
                 cart_item.quantity+=1
                 cart_item.save()
+                return redirect('/')
             
-            return JsonResponse({'message': 'Товар добавлен в корзину'})
+            
+        
         elif 'remove_tovar' in request.POST:
             
             cart_item = Cart.objects.get(user=request.user, product = tovar)
             print(cart_item)
             cart_item.delete()
-        elif request.POST.get('add_like'):
+
+        elif 'add_like' in request.POST:
             like_item,created = Like.objects.get_or_create(user = request.user,product=tovar)
-            # if  created:
-            #     return JsonResponse({'message': 'Товар добавлен в избранное'})
-            # else:
-            #     return JsonResponse({'message': 'Товар уже есть в избранном'})
-    elif 'remove_like' in request.POST:
-        try:
+
+        elif 'remove_like' in request.POST:
+            
             like_item = Like.objects.get(user=request.user, product=tovar)
             like_item.delete()
-            return JsonResponse({'message': 'Товар удален из избранных'})
-        except Like.DoesNotExist:
-            return JsonResponse({'message': 'Товар не найден в избранных'})
+                
 
 
             
@@ -199,24 +200,33 @@ def profile_user(request):
 def cart(request):
     
 
-   
+    user = request.user
+
 
     if request.method == 'POST':
         item_id = request.POST.get('item_id')
         item = Cart.objects.get(id=item_id)
-
+        cart_items = Cart.objects.filter(user=user)
+        total_price = 0
         if 'add_tovar' in request.POST:
             item.decrease_quantity()  # Уменьшить количество товара на 1
         elif 'remove_tovar' in request.POST:
             item.increase_quantity()  # Увеличить количество товара на 1
-        elif 'delete' in request.POST:
+            
+        
+        elif 'remove_like' in request.POST:
             item.delete()
-        return redirect('cart')  # Перенаправляем обратно на страницу корзины
 
-    user = request.user
+          # Обновление информации о корзине
+        total_price = cart_items.aggregate(total=Sum(F('price_sale') * F('quantity')))['total']
+
+ 
+    
     cart_items = Cart.objects.filter(user=user)
-
-    context = {'cart_items': cart_items}
+    total_price = cart_items.aggregate(total=Sum(F('product__sale_price') * F('quantity')))['total']
+    total_q = Cart.objects.aggregate(total_quantity=Sum('quantity'))
+    context = {'cart_items': cart_items,'total_price':total_price,
+               'len':total_q.get('total_quantity')}
     return render(request, 'cart.html', context)
 
 

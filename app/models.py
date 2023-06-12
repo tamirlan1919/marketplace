@@ -100,23 +100,30 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    price_sale = models.DecimalField(max_digits=10, decimal_places=2, default=0,null=True)  # Добавляем поле price
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0,null=True)
 
     def increase_quantity(self):
         self.quantity += 1
-        self.product.sale_price*=self.quantity
-        self.product.price*=self.quantity
+        self.price_sale =self.quantity*self.product.sale_price
+        self.price =self.quantity*self.product.price
+
         self.save()
 
     def decrease_quantity(self):
         if self.quantity > 1:
             self.quantity -= 1
-            self.product.sale_price*=self.quantity
-            self.product.price*=self.quantity
+            self.price_sale =self.quantity*self.product.sale_price
+            self.price =self.quantity*self.product.price
             self.save()
         else:
             self.delete()
     
-
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Check if it's a new cart item
+            self.price_sale = self.product.sale_price  # Set price_sale to product's sale_price
+            self.price = self.product.price
+        super().save(*args, **kwargs)
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

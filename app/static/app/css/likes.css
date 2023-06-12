@@ -39,7 +39,7 @@
 
 }
 
-.likes button{
+.likes .items button{
     background: #0056B3 ;
     border: 2px solid #0056B3;
     padding: 5px 20px 7px;
@@ -62,9 +62,13 @@
     height: 100%;
 }
 
-.likes button:hover{
+.likes .items button:hover{
     background-color: #1378e3;
     border: 2px solid #1378e3;
+}
+
+.tov{
+    margin-right: 25px;
 }
 
 .likes h1, #sales h1{
