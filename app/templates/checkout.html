@@ -1,0 +1,176 @@
+{% extends 'index.html' %}
+{%  load static %}
+
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'app/css/checkout.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container check">
+    <p class="back"><a class="back" href="{% url 'cart' %}"><i class="fa-solid fa-backward"></i>Вернуться в корзину</a></p>
+    <h1>Оформление заказа</h1>
+    <div class="row">
+        <h2>Контактные данные</h2>
+        <div class="col-4">
+            <input type="text" placeholder="Имя" value="{{profile.name}}">
+        </div>
+        <div class="col-4">
+            <input type="text" placeholder="Фамилия" value="{{profile.second_name}}">
+        </div>
+        <div class="col-4">
+            <input type="text" placeholder="Отчевство (при наличии)" value="{{profile.last_name}}">
+        </div>
+        <div class="col-6">
+            <input type="email" placeholder="Email" value = "{{email}}">
+        </div>
+        <div class="col-6">
+            <input type="tel" placeholder="Номер телефона" value="{{profile.phone_number}}">
+        </div>
+        <div class="col">
+            <input type="checkbox" checked><label for="">Позвоните мне после оформления заказа</label>
+        </div>
+    </div>
+    <div class="row">
+        <h2>Способ получения</h2>
+        <div class="col-6 off">
+            <div class="off-text">
+              <button class="active-btn" id="about">Пункт выдачи</button>
+              <button class="deactive" id="descp">Доставка</button>
+            </div>
+            <div class="about active-text" id="text1">
+                
+                <button>Выбрать пункт доставки</button>
+              
+            </div>
+            <div class="description deactive-text" id="text2">
+               
+
+             <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Выбрать адрес доставки
+            </button>
+  
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    ...
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+              
+            </div>
+      </div>
+        <div class="col-6">
+            <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Яндекс Карты</a><a href="https://yandex.ru/maps/geo/moskva/53000094/?ll=37.250969%2C55.476145&utm_medium=mapframe&utm_source=maps&z=8.99" style="color:#eee;font-size:12px;position:absolute;top:14px;">Москва — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll=37.250969%2C55.476145&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1MzAwMDA5NBIa0KDQvtGB0YHQuNGPLCDQnNC-0YHQutCy0LAiCg2GeBZCFQEGX0I%2C&z=8.99" width="100%" height="300" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+        </div>
+    </div>
+    <div class="row last">
+        <h2>Способ оплаты</h2>
+        <div class="col-8">
+            
+            <div class="off-text">
+                <button class="active-btn" id="about">Онлайн</button>
+                <button class="deactive" id="">При получении</button>
+              </div>
+              <div class="about active-text" id="bank-cart">
+                  
+                  <input type="radio"><label for="">Банковская карта</label>
+                  <img src="{% static 'app/img/master.svg' %}" alt="">
+                  <img src="{% static 'app/img/visa.svg' %}" alt="">
+                  <img src="{% static 'app/img/mir.svg' %}" alt="">
+                
+              </div>
+              <div class="description deactive-text" id="text2">
+                
+                
+                
+              </div>
+        </div>
+        <div class="col">
+            <!-- <div class="ordering__total-info">
+                <div class="ordering__params">
+                    <dl class="ordering__params-row">
+                        <dt class="ordering__params-key font-medium text-sm">
+                            Доставка</dt>
+                            <dd class="ordering__params-value font-medium text-sm">
+                                Бесплатно</dd></dl><dl class="ordering__params-row">
+                                    <dt class="ordering__params-key font-medium text-sm">
+                                        Товаров</dt>
+                                        <dd class="ordering__params-value font-medium text-sm">{{len}} шт</dd>
+                                    </dl><dl class="ordering__params-row">
+                                        <dt class="ordering__params-key font-medium text-sm">Стоимость</dt>
+                                        <dd class="ordering__params-value font-medium text-sm">{{total_price}} ₽</dd>
+                                    </dl>
+                                </div>
+                                <h3 class="ordering__total-sum font-extra-black title-md"><span>Итого </span><span>{{total_price}} ₽</span></h3>
+                            </div> -->
+                            <div class="check2">
+                                <svg width="210px" viewBox="0 0 210 5" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M0,0 210,0" fill="none" stroke="#F9F8FB" stroke-dasharray="3 3" stroke-width="10"/>
+                                </svg>
+                              
+                                <div class="info">
+                                  <span>Магазин "Laram"</span>
+                                  <span>Юридический адресс: Ростовская обл, г.Ростов Селиванова 68</span>
+                                </div>
+                                <h4>Фискальный чек</h4>
+                                <ul>
+                                  {% for item in cart_items%}
+                                  {% if item.product.is_on_sale %}
+                                  <li><span>{{item.product.name}} [{{item.quantity}} шт]</span><span class="price">{{item.product.sale_price}} ₽</span></li>
+                                  {% else %}
+                                  <li><span>{{item.product.name}} [{{item.quantity}} шт]</span><span class="price">{{item.product.price}} ₽</span></li>
+                                {% endif %}
+                                  {% endfor %}
+                                </ul>
+                                
+                                <p class="res">Итого: {{total_price}} ₽</p>
+                              </div>
+                              <button class="btnn">Оформить заказ</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block ajax %}
+<script>
+    let about = document.getElementById('about')
+let descp = document.getElementById('descp')
+let text = document.getElementById('text1')
+let text2 = document.getElementById('text2')
+about.onclick = function(){
+    about.style.background = '#fff'
+    descp.style.background = '#F9F8FB'
+    text.classList.add('active-text')
+    text.classList.remove('deactive-text')
+    text2.classList.remove('active-text')
+    text2.classList.add('deactive-text')
+}
+
+descp.onclick = function(){
+    descp.style.background = '#fff'
+    about.style.background = '#F9F8FB'
+    text2.classList.add('active-text')
+    text2.classList.remove('deactive-text')
+    text.classList.remove('active-text')
+    text.classList.add('deactive-text')
+}
+</script>
+
+{% endblock %}

@@ -240,3 +240,15 @@ def likes(request):
 @login_required
 def order(request):
     return render(request,'orders.html')
+
+@login_required
+def checkout(request):
+    user = request.user
+    profile = user.userprofile
+    email = request.user.email
+    cart_items = Cart.objects.filter(user=user)
+    total_price = cart_items.aggregate(total=Sum(F('product__sale_price') * F('quantity')))['total']
+    total_q = Cart.objects.aggregate(total_quantity=Sum('quantity'))
+    context = {'profile': profile,'email':email,'total_price':total_price,
+               'len':total_q.get('total_quantity'),'cart_items': cart_items}
+    return render(request, 'checkout.html',context) 

@@ -69,9 +69,9 @@
                 <p>{{ total_price }} &#8381</p>
             </div>
             <p class="text_gray">Без учета возможной стоимости доставки</p>
-            <form action="">
-                <button>Перейти к оформлению {{len}} товар</button>
-            </form>
+            
+            <a href="{% url 'checkout' %}"><button> Перейти к оформлению {{len}} товар</button></a>
+   
         </div>
     </div>
 
