@@ -29,6 +29,8 @@ class UserProfile(models.Model):
     comment = models.TextField('Комментарий',null=True,blank=True)
     notification_settings = models.BooleanField('Уведомления',default=True)
 
+
+
     def __str__(self) -> str:
         return f'{self.user}'
 class Category(models.Model):

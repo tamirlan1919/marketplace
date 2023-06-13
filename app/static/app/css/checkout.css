@@ -22,6 +22,13 @@
     color: #000;
     border: 1px solid #000;
 }
+#text2 button{
+    background-color: #fff;
+    padding: 10px 24px;
+    border-radius: 8px;
+    color: #000;
+    border: 1px solid #000;
+}
 
 .check .back{
     padding-top: 20px;
@@ -33,7 +40,7 @@
     margin-right: 8px;
 }
 
-.check h1{
+.check .info{
 
     padding-top: 50px;
     font-size: 36px;
@@ -59,6 +66,19 @@
     margin-right: 20px;
 }
 
+.list-info{
+  
+    
+}
+.list-info textarea{
+    width: 100%;
+}
+.list-info input{
+    margin-right: 5px;
+}
+.list-info text{
+    width: 100%;
+}
 .card-body{
     background-color: #fff;
     color: #212529;
