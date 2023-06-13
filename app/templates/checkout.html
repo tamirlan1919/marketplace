@@ -17,22 +17,22 @@
     <div class="row">
         <h2>Контактные данные</h2>
         <div class="col-4">
-            <input type="text" placeholder="Имя" value="{{profile.name}}">
+            <input type="text" name="name" placeholder="Имя" value="{{profile.name}}">
         </div>
         <div class="col-4">
-            <input type="text" placeholder="Фамилия" value="{{profile.second_name}}">
+            <input type="text" name="second_name" placeholder="Фамилия" value="{{profile.second_name}}">
         </div>
         <div class="col-4">
-            <input type="text" placeholder="Отчевство (при наличии)" value="{{profile.last_name}}">
+            <input type="text" name="last_name" placeholder="Отчевство (при наличии)" value="{{profile.last_name}}">
         </div>
         <div class="col-6">
-            <input type="email" placeholder="Email" value = "{{email}}">
+            <input type="email"  name="email" placeholder="Email" value = "{{email}}">
         </div>
         <div class="col-6">
-            <input type="tel" placeholder="Номер телефона" value="{{profile.phone_number}}">
+            <input type="tel" name="phone" placeholder="Номер телефона" value="{{profile.phone_number}}">
         </div>
         <div class="col">
-            <input type="checkbox" checked><label for="">Позвоните мне после оформления заказа</label>
+            <input type="checkbox" name="call" checked><label for="">Позвоните мне после оформления заказа</label>
         </div>
     </div>
     <div class="row">
@@ -52,12 +52,12 @@
 
              <!-- Button trigger modal -->
              <div class="list-info">
-                <input type="text" placeholder="Город" value="{{profile.address_city}}">
-                <input type="text" placeholder="Улица" value="{{profile.address_street}}">
-                <input type="text" placeholder="Дом" value="{{profile.address_house}}">
-                <input type="text" placeholder="Подъезд" value="{{profile.address_podezd}}">
-                <input type="text" placeholder="Квартира" value="{{profile.address_kv}}"><br>
-                <textarea name="" id="" cols="30" rows="10" placeholder="Комментарий"></textarea>
+                <input type="text" name="city" placeholder="Город" value="{{profile.address_city}}">
+                <input type="text" name="street" placeholder="Улица" value="{{profile.address_street}}">
+                <input type="text" name="house" placeholder="Дом" value="{{profile.address_house}}">
+                <input type="text" name="podezd" placeholder="Подъезд" value="{{profile.address_podezd}}">
+                <input type="text" name="kv" placeholder="Квартира" value="{{profile.address_kv}}"><br>
+                <textarea name="comment" id="" cols="30" rows="10" placeholder="Комментарий"></textarea>
                 <button>Сохранить</button>
             </div>
   
@@ -132,7 +132,12 @@
                                 
                                 <p class="res">Итого: {{total_price}} ₽</p>
                               </div>
-                              <button class="btnn">Оформить заказ</button>
+                              <form action="" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" id="checkout-button">Checkout</button>
+                            </form>
+
+                              
         </div>
     </div>
 </div>
@@ -161,6 +166,16 @@ descp.onclick = function(){
     text.classList.remove('active-text')
     text.classList.add('deactive-text')
 }
+</script>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  var stripe = Stripe('pk_test_51NIXZdDH5GBIDMeb4CgQldHKLMS6lpPXUts3PxzB3w1feKa0Y804reDLUIw7j6CTOakQ27KRx339OnrkN4mStQ5o00bp0gbd4y');
+  stripe.redirectToCheckout({
+    sessionId: '{{ sessionId }}'
+  }).then(function (result) {
+    // Обработка ошибки, если произошла
+  });
 </script>
 
 {% endblock %}

@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import stripe
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+stripe.api_key = 'sk_test_51NIXZdDH5GBIDMebeeOoxaz1uwBLJ8Gsznh4MwBtmqorQ8RnvKxI8RFj8EsiwFWzsgD42pZAXZ11anflerUr7swp00XcPKzMwS'
+YOUR_DOMAIN = 'http://localhost:8000'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -24,7 +26,8 @@ SECRET_KEY = 'django-insecure-7-86)h^blx&+nyra1y_9ccvb=e1f%ci87d+2z#cazcwwm8^#d-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+STRIPE_PUBLIC_KEY =  'pk_test_51NIXZdDH5GBIDMeb4CgQldHKLMS6lpPXUts3PxzB3w1feKa0Y804reDLUIw7j6CTOakQ27KRx339OnrkN4mStQ5o00bp0gbd4y'
+STRIPE_SECRET_KEY = 'sk_test_51NIXZdDH5GBIDMebeeOoxaz1uwBLJ8Gsznh4MwBtmqorQ8RnvKxI8RFj8EsiwFWzsgD42pZAXZ11anflerUr7swp00XcPKzMwS'
 ALLOWED_HOSTS = []
 
 

@@ -22,7 +22,9 @@ from django.core.mail import EmailMessage
 from .models import Cart,Like
 from django.http import JsonResponse
 from django.db.models import F, Sum
-
+from market.settings import YOUR_DOMAIN,STRIPE_PUBLIC_KEY,STRIPE_SECRET_KEY
+import stripe
+from decimal import Decimal
 # Create your views here.
 
 
@@ -241,6 +243,7 @@ def likes(request):
 def order(request):
     return render(request,'orders.html')
 
+
 @login_required
 def checkout(request):
     user = request.user
@@ -249,6 +252,43 @@ def checkout(request):
     cart_items = Cart.objects.filter(user=user)
     total_price = cart_items.aggregate(total=Sum(F('product__sale_price') * F('quantity')))['total']
     total_q = Cart.objects.aggregate(total_quantity=Sum('quantity'))
-    context = {'profile': profile,'email':email,'total_price':total_price,
-               'len':total_q.get('total_quantity'),'cart_items': cart_items}
-    return render(request, 'checkout.html',context) 
+    session = None  # Инициализируем переменную session
+
+    if request.method == 'POST':
+        try:
+            unit_amount = int(Decimal(total_price) * 100)  # Преобразуем total_price в целое число
+
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[
+                    {
+                        'price_data': {
+                            'currency': 'rub',
+                            'unit_amount': unit_amount,  # Сумма платежа в минимальных единицах валюты (например, центах)
+                            'product_data': {
+                                'name': 'Оплати баэ',
+                                'images': ['https://example.com/product-image.jpg'],
+                            },
+                        },
+                        'quantity': total_q['total_quantity'],  # Получаем только значение total_quantity
+                    },
+                ],
+                mode='payment',
+                success_url=YOUR_DOMAIN + '/success.html',
+                cancel_url=YOUR_DOMAIN + '/cancel.html',
+            )
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, safe=False)
+        
+        return redirect(session.url)
+    session_id = session.id if session else None  # Создаем переменную session_id
+
+    context = {
+        'profile': profile,
+        'email': email,
+        'total_price': total_price,
+        'len': total_q.get('total_quantity'),
+        'cart_items': cart_items,
+        'sessionId': session_id  # Используем session_id вместо session.id
+    }
+    return render(request, 'checkout.html', context)
