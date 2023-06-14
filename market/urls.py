@@ -34,7 +34,10 @@ urlpatterns = [
     path('cart/',views.cart,name='cart'),
     path('like/',views.likes, name='likes'),
     path('order/',views.order,name='order'),
-    path('checkout/',views.checkout, name='checkout')
+    path('checkout/',views.checkout, name='checkout'),
+    path('cart/cancel',views.cancel,name='cancel'),
+    path('success/', views.success, name='success'),
+
 
 
 ]

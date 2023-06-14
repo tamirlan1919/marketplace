@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404
+from django.urls import reverse
 from app.models import Category,Product,Review,Question
 from .forms import UserLoginForm,SignupForm
 from django.contrib.auth import login,logout,authenticate,get_user_model
@@ -25,6 +26,9 @@ from django.db.models import F, Sum
 from market.settings import YOUR_DOMAIN,STRIPE_PUBLIC_KEY,STRIPE_SECRET_KEY
 import stripe
 from decimal import Decimal
+import math
+import urllib.parse
+
 # Create your views here.
 
 
@@ -253,34 +257,38 @@ def checkout(request):
     total_price = cart_items.aggregate(total=Sum(F('product__sale_price') * F('quantity')))['total']
     total_q = Cart.objects.aggregate(total_quantity=Sum('quantity'))
     session = None  # Инициализируем переменную session
-
     if request.method == 'POST':
         try:
-            unit_amount = int(Decimal(total_price) * 100)  # Преобразуем total_price в целое число
+            unit_amount = math.ceil(total_price)  # Convert total_price to an integer
+
+            line_items = []  # Create an empty list for line items
+            for item in cart_items:
+                product = item.product
+                line_item = {
+                    'price_data': {
+                        'currency': 'rub',
+                        'unit_amount': int(product.sale_price * 100),  # Convert price to the lowest currency unit
+                        'product_data': {
+                            'name': product.name,
+                            'images': ['https://vk.com'],
+                        },
+                    },
+                    'quantity': item.quantity,
+                }
+                line_items.append(line_item)  # Append each line item to the line_items list
 
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
-                line_items=[
-                    {
-                        'price_data': {
-                            'currency': 'rub',
-                            'unit_amount': unit_amount,  # Сумма платежа в минимальных единицах валюты (например, центах)
-                            'product_data': {
-                                'name': 'Оплати баэ',
-                                'images': ['https://example.com/product-image.jpg'],
-                            },
-                        },
-                        'quantity': total_q['total_quantity'],  # Получаем только значение total_quantity
-                    },
-                ],
+                line_items=line_items,  # Pass the line_items list
                 mode='payment',
-                success_url=YOUR_DOMAIN + '/success.html',
-                cancel_url=YOUR_DOMAIN + '/cancel.html',
+                success_url=request.build_absolute_uri(reverse('success')),
+                cancel_url=request.build_absolute_uri(reverse('cancel'))
             )
         except Exception as e:
             return JsonResponse({'error': str(e)}, safe=False)
-        
+
         return redirect(session.url)
+
     session_id = session.id if session else None  # Создаем переменную session_id
 
     context = {
@@ -292,3 +300,10 @@ def checkout(request):
         'sessionId': session_id  # Используем session_id вместо session.id
     }
     return render(request, 'checkout.html', context)
+
+
+def cancel(request):
+    return render(request, 'cancel.html')
+
+def success(request):
+    return(render,'success.html')

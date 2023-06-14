@@ -67,7 +67,6 @@
 }
 
 .list-info{
-  
     
 }
 .list-info textarea{
@@ -218,6 +217,7 @@ body{
   }
 
   .btnn{
+    opacity: 0.3;
     text-transform: uppercase;
     background: linear-gradient(to right,#0056B3 0,#1378e3 100%) no-repeat;
     margin-top: 10px;
